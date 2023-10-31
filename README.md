@@ -30,10 +30,13 @@ False: All data consolidated in a single file.
 
 # Examples
 Process all weeks and divisions, and save in batched format:
+
 ``` python processing.py all True ```
+
 Process all weeks of division d1, and save in a single file:
 
 ```python processing.py d1 False ```
+
 # Output
 The processed data is saved in the outputs directory. The naming convention of the output files depends on your specified options:
 
