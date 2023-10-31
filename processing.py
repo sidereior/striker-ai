@@ -74,10 +74,10 @@ def process_week(week_number, division):
                 # Log a warning if the scores are not found
                 logging.warning(f"Scores not found for game between {home_team} and {away_team} in {file_path}")
                 continue
-            data.append([home_team, away_team, home_goals, away_goals, home_conference, away_conference, week_number])
+            data.append([home_team, away_team, home_goals, away_goals, home_conference, away_conference, week_number, division])
 
     # Convert the extracted data to a DataFrame
-    df = pd.DataFrame(data, columns=['Home Team', 'Away Team', 'Home Goals', 'Away Goals', 'Home Team Conference', 'Away Team Conference', 'Week'])
+    df = pd.DataFrame(data, columns=['Home Team', 'Away Team', 'Home Goals', 'Away Goals', 'Home Team Conference', 'Away Team Conference', 'Week', 'Division'])
 
     # Save the DataFrame to a CSV file
     csv_file_path = f'outputs/{division}_week{week_number}_data_batch_{batch_id}.csv'
