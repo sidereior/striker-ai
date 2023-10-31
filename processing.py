@@ -33,7 +33,7 @@ def process_week(week_number, division):
     file_path = f'inputs/{division}-week{week_number}.txt'
     if not os.path.exists(file_path):
         logging.warning(f"File not found: {file_path}")
-        return
+        return None
     
     with open(file_path, 'r', encoding='utf-8') as file:
         html_content = file.read()
@@ -45,7 +45,7 @@ def process_week(week_number, division):
     list_table_view = tree.xpath('//*[@id="listTableView"]')
     if not list_table_view:
         logging.warning(f"Element with id 'listTableView' not found in {file_path}")
-        return
+        return None
 
     # Initialize a list to store the extracted data
     data = []
@@ -77,30 +77,59 @@ def process_week(week_number, division):
             data.append([home_team, away_team, home_goals, away_goals, home_conference, away_conference, week_number, division])
 
     # Convert the extracted data to a DataFrame
-    df = pd.DataFrame(data, columns=['Home Team', 'Away Team', 'Home Goals', 'Away Goals', 'Home Team Conference', 'Away Team Conference', 'Week', 'Division'])
-
-    # Save the DataFrame to a CSV file
-    csv_file_path = f'outputs/{division}_week{week_number}_data_batch_{batch_id}.csv'
-    df.to_csv(csv_file_path, index=False)
-    print(f"Data for {division} division, week {week_number} has been saved to {csv_file_path}")
+    return pd.DataFrame(data, columns=['Home Team', 'Away Team', 'Home Goals', 'Away Goals', 'Home Team Conference', 'Away Team Conference', 'Week', 'Division'])
 
 # Set up command-line argument parsing
 parser = argparse.ArgumentParser(description='Process soccer game data.')
 parser.add_argument('division', type=str, help='The division to process (d1, d2, d3, naia, njcaa, or all)')
+parser.add_argument('batched', type=str, help='Whether the output should be batched (True or False)')
 
 # Parse command-line arguments
 args = parser.parse_args()
 
+# Validate batched argument
+if args.batched.lower() not in ['true', 'false']:
+    print("Invalid argument for batched. Please choose True or False.")
+    exit()
+
+# Convert batched argument to boolean
+args.batched = args.batched.lower() == 'true'
+
 # List of all possible divisions
-divisions = ['d1', 'd2', 'd3', 'naia', 'njcaa']
+divisions = ['d2', 'd3', 'naia', 'njcaa', 'd1']
+
+# Initialize a DataFrame to store all data if not batching
+all_data = pd.DataFrame()
 
 # Loop through all the weeks and divisions based on user input
 for week in range(1, 13):
     if args.division.lower() == 'all':
         for division in divisions:
-            process_week(week, division)
+            df = process_week(week, division)
+            if df is not None:
+                if args.batched:
+                    csv_file_path = f'outputs/{division}_week{week}_data_batch_{batch_id}.csv'
+                    df.to_csv(csv_file_path, index=False)
+                    print(f"Data for {division} division, week {week} has been saved to {csv_file_path}")
+                else:
+                    all_data = pd.concat([all_data, df], ignore_index=True)
     elif args.division.lower() in divisions:
-        process_week(week, args.division.lower())
+        df = process_week(week, args.division.lower())
+        if df is not None:
+            if args.batched:
+                csv_file_path = f'outputs/{args.division.lower()}_week{week}_data_batch_{batch_id}.csv'
+                df.to_csv(csv_file_path, index=False)
+                print(f"Data for {args.division.lower()} division, week {week} has been saved to {csv_file_path}")
+            else:
+                all_data = pd.concat([all_data, df], ignore_index=True)
     else:
-        print("Invalid division. Please choose from d1, d2, d3, naia, njcaa, or all.")
-        break
+        print("Invalid division specified. Please choose from d1, d2, d3, naia, njcaa, or all.")
+        exit()
+
+if not args.batched:
+    if args.division.lower() == 'all':
+        csv_file_path = f'outputs/all_unbatched_{batch_id}.csv'
+    else:
+        csv_file_path = f'outputs/{args.division.lower()}_unbatched_{batch_id}.csv'
+    all_data.to_csv(csv_file_path, index=False)
+    print(f"All data has been saved to {csv_file_path}")

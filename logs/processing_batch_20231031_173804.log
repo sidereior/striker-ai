@@ -1,0 +1,130 @@
+2023-10-31 17:38:04,475 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week1.txt
+2023-10-31 17:38:04,582 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week2.txt
+2023-10-31 17:38:04,668 - WARNING - Scores not found for game between Wisconsin-La Crosse and St. Benedict in inputs/d3-week3.txt
+2023-10-31 17:38:04,668 - WARNING - Scores not found for game between Clarkson and Nazareth in inputs/d3-week3.txt
+2023-10-31 17:38:04,669 - WARNING - Scores not found for game between Wisconsin-Stevens Point and St. Benedict in inputs/d3-week3.txt
+2023-10-31 17:38:04,677 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week3.txt
+2023-10-31 17:38:04,754 - WARNING - Scores not found for game between Nazareth and Penn State-Behrend in inputs/d3-week4.txt
+2023-10-31 17:38:04,754 - WARNING - Scores not found for game between Nazareth and Wheaton (Ill.) in inputs/d3-week4.txt
+2023-10-31 17:38:04,754 - WARNING - Scores not found for game between Wisconsin-Eau Claire and St. Benedict in inputs/d3-week4.txt
+2023-10-31 17:38:04,826 - WARNING - Scores not found for game between Macalester and St. Benedict in inputs/d3-week5.txt
+2023-10-31 17:38:04,827 - WARNING - Scores not found for game between Nazareth and SUNY Geneseo in inputs/d3-week5.txt
+2023-10-31 17:38:04,827 - WARNING - Scores not found for game between Ithaca and Nazareth in inputs/d3-week5.txt
+2023-10-31 17:38:04,827 - WARNING - Scores not found for game between St. Benedict and Hamline in inputs/d3-week5.txt
+2023-10-31 17:38:04,827 - WARNING - Scores not found for game between St. Benedict and Wartburg in inputs/d3-week5.txt
+2023-10-31 17:38:04,835 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week5.txt
+2023-10-31 17:38:04,929 - WARNING - Scores not found for game between Nazareth and Hartwick in inputs/d3-week6.txt
+2023-10-31 17:38:04,929 - WARNING - Scores not found for game between St. Mary's (Minn.) and St. Benedict in inputs/d3-week6.txt
+2023-10-31 17:38:04,934 - WARNING - Element with id 'listTableView' not found in inputs/naia-week6.txt
+2023-10-31 17:38:04,937 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week6.txt
+2023-10-31 17:38:04,990 - WARNING - Scores not found for game between Pacific and Portland in inputs/d1-week7.txt
+2023-10-31 17:38:05,043 - WARNING - Scores not found for game between Houghton and Nazareth in inputs/d3-week7.txt
+2023-10-31 17:38:05,043 - WARNING - Scores not found for game between St. Benedict and Augsburg in inputs/d3-week7.txt
+2023-10-31 17:38:05,044 - WARNING - Scores not found for game between Nazareth and Keuka in inputs/d3-week7.txt
+2023-10-31 17:38:05,044 - WARNING - Scores not found for game between St. Catherine and St. Benedict in inputs/d3-week7.txt
+2023-10-31 17:38:05,044 - WARNING - Scores not found for game between St. Benedict and Simpson in inputs/d3-week7.txt
+2023-10-31 17:38:05,051 - WARNING - Element with id 'listTableView' not found in inputs/naia-week7.txt
+2023-10-31 17:38:05,056 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week7.txt
+2023-10-31 17:38:05,162 - WARNING - Scores not found for game between Gustavus Adolphus and St. Benedict in inputs/d3-week8.txt
+2023-10-31 17:38:05,165 - WARNING - Element with id 'listTableView' not found in inputs/naia-week8.txt
+2023-10-31 17:38:05,168 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week8.txt
+2023-10-31 17:38:05,237 - WARNING - Scores not found for game between Tiffin and Cedarville in inputs/d2-week9.txt
+2023-10-31 17:38:05,242 - WARNING - Scores not found for game between St. Benedict and Concordia-Moorhead in inputs/d3-week9.txt
+2023-10-31 17:38:05,242 - WARNING - Scores not found for game between Bethel (Minn.) and St. Benedict in inputs/d3-week9.txt
+2023-10-31 17:38:05,242 - WARNING - Scores not found for game between St. Benedict and Wisconsin-Stout in inputs/d3-week9.txt
+2023-10-31 17:38:05,246 - WARNING - Element with id 'listTableView' not found in inputs/naia-week9.txt
+2023-10-31 17:38:05,248 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week9.txt
+2023-10-31 17:38:05,287 - WARNING - Scores not found for game between UC Riverside and Long Beach State in inputs/d1-week10.txt
+2023-10-31 17:38:05,317 - WARNING - Scores not found for game between Malone and Cedarville in inputs/d2-week10.txt
+2023-10-31 17:38:05,317 - WARNING - Scores not found for game between Cedarville and Ursuline College (Ohio) in inputs/d2-week10.txt
+2023-10-31 17:38:05,321 - WARNING - Scores not found for game between St. Scholastica and St. Benedict in inputs/d3-week10.txt
+2023-10-31 17:38:05,321 - WARNING - Scores not found for game between St. Benedict and St. Olaf in inputs/d3-week10.txt
+2023-10-31 17:38:05,325 - WARNING - Element with id 'listTableView' not found in inputs/naia-week10.txt
+2023-10-31 17:38:05,327 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week10.txt
+2023-10-31 17:38:05,374 - WARNING - Scores not found for game between Lake Erie and Cedarville in inputs/d2-week11.txt
+2023-10-31 17:38:05,374 - WARNING - Scores not found for game between Walsh and Cedarville in inputs/d2-week11.txt
+2023-10-31 17:38:05,378 - WARNING - Scores not found for game between St. Benedict and Carleton in inputs/d3-week11.txt
+2023-10-31 17:38:05,382 - WARNING - Element with id 'listTableView' not found in inputs/naia-week11.txt
+2023-10-31 17:38:05,384 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week11.txt
+2023-10-31 17:38:05,392 - WARNING - Scores not found for game between UAB and Memphis in inputs/d1-week12.txt
+2023-10-31 17:38:05,392 - WARNING - Scores not found for game between Auburn and Arkansas in inputs/d1-week12.txt
+2023-10-31 17:38:05,393 - WARNING - Scores not found for game between Texas A&M and South Carolina in inputs/d1-week12.txt
+2023-10-31 17:38:05,393 - WARNING - Scores not found for game between Alabama and Mississippi State in inputs/d1-week12.txt
+2023-10-31 17:38:05,393 - WARNING - Scores not found for game between Charlotte and East Carolina in inputs/d1-week12.txt
+2023-10-31 17:38:05,393 - WARNING - Scores not found for game between Kentucky and Georgia in inputs/d1-week12.txt
+2023-10-31 17:38:05,393 - WARNING - Scores not found for game between South Florida and Florida Atlantic in inputs/d1-week12.txt
+2023-10-31 17:38:05,394 - WARNING - Scores not found for game between Tulsa and SMU in inputs/d1-week12.txt
+2023-10-31 17:38:05,394 - WARNING - Scores not found for game between BYU and USF in inputs/d1-week12.txt
+2023-10-31 17:38:05,394 - WARNING - Scores not found for game between Texas and Texas Tech in inputs/d1-week12.txt
+2023-10-31 17:38:05,394 - WARNING - Scores not found for game between Saint Louis and Duquesne in inputs/d1-week12.txt
+2023-10-31 17:38:05,394 - WARNING - Scores not found for game between Texas State and South Alabama in inputs/d1-week12.txt
+2023-10-31 17:38:05,395 - WARNING - Scores not found for game between California Baptist and Seattle in inputs/d1-week12.txt
+2023-10-31 17:38:05,395 - WARNING - Scores not found for game between Georgia State and Old Dominion in inputs/d1-week12.txt
+2023-10-31 17:38:05,395 - WARNING - Scores not found for game between Gonzaga and Loyola Marymount in inputs/d1-week12.txt
+2023-10-31 17:38:05,395 - WARNING - Scores not found for game between Houston Christian and Texas A&M-Commerce in inputs/d1-week12.txt
+2023-10-31 17:38:05,396 - WARNING - Scores not found for game between James Madison and Appalachian State in inputs/d1-week12.txt
+2023-10-31 17:38:05,396 - WARNING - Scores not found for game between La Salle and Dayton in inputs/d1-week12.txt
+2023-10-31 17:38:05,396 - WARNING - Scores not found for game between Louisiana Tech and Western Kentucky in inputs/d1-week12.txt
+2023-10-31 17:38:05,396 - WARNING - Scores not found for game between Louisiana-Monroe and Georgia Southern in inputs/d1-week12.txt
+2023-10-31 17:38:05,396 - WARNING - Scores not found for game between McNeese State and Southeastern Louisiana in inputs/d1-week12.txt
+2023-10-31 17:38:05,397 - WARNING - Scores not found for game between Northern Arizona and Sacramento State in inputs/d1-week12.txt
+2023-10-31 17:38:05,397 - WARNING - Scores not found for game between Portland State and Idaho State in inputs/d1-week12.txt
+2023-10-31 17:38:05,397 - WARNING - Scores not found for game between Sam Houston State and Florida International in inputs/d1-week12.txt
+2023-10-31 17:38:05,397 - WARNING - Scores not found for game between San Diego State and Colorado State in inputs/d1-week12.txt
+2023-10-31 17:38:05,397 - WARNING - Scores not found for game between San Francisco and Pepperdine in inputs/d1-week12.txt
+2023-10-31 17:38:05,398 - WARNING - Scores not found for game between Santa Clara and San Diego in inputs/d1-week12.txt
+2023-10-31 17:38:05,398 - WARNING - Scores not found for game between St. Mary's (CA) and Portland in inputs/d1-week12.txt
+2023-10-31 17:38:05,398 - WARNING - Scores not found for game between Texas A&M-Corpus Christi and Northwestern State in inputs/d1-week12.txt
+2023-10-31 17:38:05,398 - WARNING - Scores not found for game between Utah State and Boise State in inputs/d1-week12.txt
+2023-10-31 17:38:05,398 - WARNING - Scores not found for game between Utah Valley and Grand Canyon in inputs/d1-week12.txt
+2023-10-31 17:38:05,398 - WARNING - Scores not found for game between Pittsburgh and Florida State in inputs/d1-week12.txt
+2023-10-31 17:38:05,399 - WARNING - Scores not found for game between Clemson and Notre Dame in inputs/d1-week12.txt
+2023-10-31 17:38:05,399 - WARNING - Scores not found for game between Iowa and Penn State in inputs/d1-week12.txt
+2023-10-31 17:38:05,399 - WARNING - Scores not found for game between Nebraska and Wisconsin in inputs/d1-week12.txt
+2023-10-31 17:38:05,399 - WARNING - Scores not found for game between Xavier and Providence in inputs/d1-week12.txt
+2023-10-31 17:38:05,399 - WARNING - Scores not found for game between Alabama A&M and Grambling State in inputs/d1-week12.txt
+2023-10-31 17:38:05,400 - WARNING - Scores not found for game between Army and Colgate in inputs/d1-week12.txt
+2023-10-31 17:38:05,400 - WARNING - Scores not found for game between Binghamton and Massachusetts-Lowell in inputs/d1-week12.txt
+2023-10-31 17:38:05,400 - WARNING - Scores not found for game between Bowling Green and Ohio University in inputs/d1-week12.txt
+2023-10-31 17:38:05,400 - WARNING - Scores not found for game between Bucknell and Boston University in inputs/d1-week12.txt
+2023-10-31 17:38:05,400 - WARNING - Scores not found for game between Cal State Fullerton and UC Irvine in inputs/d1-week12.txt
+2023-10-31 17:38:05,400 - WARNING - Scores not found for game between Connecticut and Georgetown in inputs/d1-week12.txt
+2023-10-31 17:38:05,401 - WARNING - Scores not found for game between Drake and UIC in inputs/d1-week12.txt
+2023-10-31 17:38:05,401 - WARNING - Scores not found for game between FGCU and Central Arkansas in inputs/d1-week12.txt
+2023-10-31 17:38:05,401 - WARNING - Scores not found for game between Fairfield and Mount St. Mary's in inputs/d1-week12.txt
+2023-10-31 17:38:05,401 - WARNING - Scores not found for game between High Point and USC Upstate in inputs/d1-week12.txt
+2023-10-31 17:38:05,401 - WARNING - Scores not found for game between IUPUI and Northern Kentucky in inputs/d1-week12.txt
+2023-10-31 17:38:05,402 - WARNING - Scores not found for game between Jackson State and Alcorn State in inputs/d1-week12.txt
+2023-10-31 17:38:05,402 - WARNING - Scores not found for game between Lipscomb and North Alabama in inputs/d1-week12.txt
+2023-10-31 17:38:05,402 - WARNING - Scores not found for game between Maine and Vermont in inputs/d1-week12.txt
+2023-10-31 17:38:05,402 - WARNING - Scores not found for game between Merrimack and Wagner in inputs/d1-week12.txt
+2023-10-31 17:38:05,402 - WARNING - Scores not found for game between Morehead State and Southeast Missouri State in inputs/d1-week12.txt
+2023-10-31 17:38:05,402 - WARNING - Scores not found for game between Prairie View A&M and Southern University in inputs/d1-week12.txt
+2023-10-31 17:38:05,403 - WARNING - Scores not found for game between Quinnipiac and Rider in inputs/d1-week12.txt
+2023-10-31 17:38:05,403 - WARNING - Scores not found for game between Radford and Charleston Southern in inputs/d1-week12.txt
+2023-10-31 17:38:05,403 - WARNING - Scores not found for game between South Carolina-Beaufort and South Carolina State in inputs/d1-week12.txt
+2023-10-31 17:38:05,403 - WARNING - Scores not found for game between Tennessee Tech and Little Rock in inputs/d1-week12.txt
+2023-10-31 17:38:05,403 - WARNING - Scores not found for game between Texas Southern and Arkansas Pine Bluff in inputs/d1-week12.txt
+2023-10-31 17:38:05,404 - WARNING - Scores not found for game between UC Davis and Cal Poly in inputs/d1-week12.txt
+2023-10-31 17:38:05,404 - WARNING - Scores not found for game between Valparaiso and Missouri State in inputs/d1-week12.txt
+2023-10-31 17:38:05,404 - WARNING - Scores not found for game between Western Michigan and Kent State in inputs/d1-week12.txt
+2023-10-31 17:38:05,404 - WARNING - Scores not found for game between Wisconsin-Milwaukee and Robert Morris in inputs/d1-week12.txt
+2023-10-31 17:38:05,404 - WARNING - Scores not found for game between UCLA and USC in inputs/d1-week12.txt
+2023-10-31 17:38:05,404 - WARNING - Scores not found for game between Stanford and California in inputs/d1-week12.txt
+2023-10-31 17:38:05,405 - WARNING - Scores not found for game between Brown and Columbia in inputs/d1-week12.txt
+2023-10-31 17:38:05,405 - WARNING - Scores not found for game between Harvard and Princeton in inputs/d1-week12.txt
+2023-10-31 17:38:05,405 - WARNING - Scores not found for game between Arizona and Arizona State in inputs/d1-week12.txt
+2023-10-31 17:38:05,405 - WARNING - Scores not found for game between Oregon State and Oregon in inputs/d1-week12.txt
+2023-10-31 17:38:05,405 - WARNING - Scores not found for game between Utah and Colorado in inputs/d1-week12.txt
+2023-10-31 17:38:05,406 - WARNING - Scores not found for game between Washington and Washington State in inputs/d1-week12.txt
+2023-10-31 17:38:05,406 - WARNING - Scores not found for game between Loyola Marymount and St. Mary's (CA) in inputs/d1-week12.txt
+2023-10-31 17:38:05,406 - WARNING - Scores not found for game between Pacific and San Francisco in inputs/d1-week12.txt
+2023-10-31 17:38:05,406 - WARNING - Scores not found for game between Pepperdine and Gonzaga in inputs/d1-week12.txt
+2023-10-31 17:38:05,406 - WARNING - Scores not found for game between Portland and Santa Clara in inputs/d1-week12.txt
+2023-10-31 17:38:05,406 - WARNING - Scores not found for game between Towson and Monmouth in inputs/d1-week12.txt
+2023-10-31 17:38:05,407 - WARNING - Scores not found for game between Western Carolina and Samford in inputs/d1-week12.txt
+2023-10-31 17:38:05,412 - WARNING - Scores not found for game between Cedarville and Thomas More in inputs/d2-week12.txt
+2023-10-31 17:38:05,413 - WARNING - Scores not found for game between Cal State East Bay and Cal State San Marcos in inputs/d2-week12.txt
+2023-10-31 17:38:05,417 - WARNING - Element with id 'listTableView' not found in inputs/d3-week12.txt
+2023-10-31 17:38:05,419 - WARNING - Scores not found for game between South Carolina-Beaufort and South Carolina State in inputs/naia-week12.txt
+2023-10-31 17:38:05,423 - WARNING - Element with id 'listTableView' not found in inputs/njcaa-week12.txt
