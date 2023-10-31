@@ -4,6 +4,7 @@ import pandas as pd
 import os
 import logging
 from datetime import datetime
+import argparse
 
 # Define a unique batch ID based on the current date and time
 batch_id = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -13,7 +14,7 @@ log_dir = 'logs'
 os.makedirs(log_dir, exist_ok=True)
 
 # Setting up logging
-log_filename = f'logs/processing_batch_{batch_id}.log'
+log_filename = f'{log_dir}/processing_batch_{batch_id}.log'
 logging.basicConfig(filename=log_filename, level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Define a function to clean text data
@@ -26,10 +27,10 @@ def extract_conference(info_string):
     conference = re.sub(r'^[^a-zA-Z]*', '', info_string)
     return conference
 
-# Define a function to process a single week
-def process_week(week_number):
-    # Load the HTML content from the text file
-    file_path = f'inputs/week{week_number}.txt'
+# Define a function to process a single week for a given division
+def process_week(week_number, division):
+    # Construct file path based on division and week number
+    file_path = f'inputs/{division}-week{week_number}.txt'
     if not os.path.exists(file_path):
         logging.warning(f"File not found: {file_path}")
         return
@@ -73,16 +74,33 @@ def process_week(week_number):
                 # Log a warning if the scores are not found
                 logging.warning(f"Scores not found for game between {home_team} and {away_team} in {file_path}")
                 continue
-            data.append([home_team, away_team, home_goals, away_goals, home_conference, away_conference])
+            data.append([home_team, away_team, home_goals, away_goals, home_conference, away_conference, week_number])
 
     # Convert the extracted data to a DataFrame
-    df = pd.DataFrame(data, columns=['Home Team', 'Away Team', 'Home Goals', 'Away Goals', 'Home Team Conference', 'Away Team Conference'])
+    df = pd.DataFrame(data, columns=['Home Team', 'Away Team', 'Home Goals', 'Away Goals', 'Home Team Conference', 'Away Team Conference', 'Week'])
 
     # Save the DataFrame to a CSV file
-    csv_file_path = f'outputs/week{week_number}_data_batch_{batch_id}.csv'
+    csv_file_path = f'outputs/{division}_week{week_number}_data_batch_{batch_id}.csv'
     df.to_csv(csv_file_path, index=False)
-    print(f"Data for week {week_number} has been saved to {csv_file_path}")
+    print(f"Data for {division} division, week {week_number} has been saved to {csv_file_path}")
 
-# Loop through all the weeks
+# Set up command-line argument parsing
+parser = argparse.ArgumentParser(description='Process soccer game data.')
+parser.add_argument('division', type=str, help='The division to process (d1, d2, d3, naia, njcaa, or all)')
+
+# Parse command-line arguments
+args = parser.parse_args()
+
+# List of all possible divisions
+divisions = ['d1', 'd2', 'd3', 'naia', 'njcaa']
+
+# Loop through all the weeks and divisions based on user input
 for week in range(1, 13):
-    process_week(week)
+    if args.division.lower() == 'all':
+        for division in divisions:
+            process_week(week, division)
+    elif args.division.lower() in divisions:
+        process_week(week, args.division.lower())
+    else:
+        print("Invalid division. Please choose from d1, d2, d3, naia, njcaa, or all.")
+        break
