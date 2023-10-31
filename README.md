@@ -1,7 +1,9 @@
 # dsa-tds-scraper
-
 ## Features
-
+- **Multiple Divisions**
+- **Batch and Unbatched Processing**
+- **Logging**
+- **Customizable Output**
 ## Requirements
 - Python 3.x
 - Pandas
@@ -28,7 +30,7 @@ Navigate to the project directory in your terminal or command prompt, and run th
 True: Output in batched format (separate files for each week and division).
 False: All data consolidated in a single file.
 
-# Examples
+## Examples
 Process all weeks and divisions, and save in batched format:
 
 ``` python processing.py all True ```
@@ -37,7 +39,7 @@ Process all weeks of division d1, and save in a single file:
 
 ```python processing.py d1 False ```
 
-# Output
+## Output
 The processed data is saved in the outputs directory. The naming convention of the output files depends on your specified options:
 
 Batched: <division>_week<week_number>_data_batch_<batch_id>.csv
