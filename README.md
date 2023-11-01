@@ -12,7 +12,7 @@
 
 ## Installation
 1. Ensure that Python 3.x is installed on your system and copy repo.
-2. Install the required packages by running: `pip install -r requirements.txt`
+2. Install the required packages (see each package's webpage for other details or run pip install package_name )
 
 ## Usage
 Navigate to the project directory in your terminal or command prompt, and run the script using the following command format:
