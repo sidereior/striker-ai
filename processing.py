@@ -66,10 +66,9 @@ def process_week(week_number, division):
             away_conference = extract_conference(away_team_info)
             home_conference = home_conference.replace('(','').replace(')','')
             away_conference = away_conference.replace('(','').replace(')','')
-            home_goals = columns[1].xpath('.//span[@class="score-min"]/text()')
-            away_goals = columns[1].xpath('.//span[@class="score-max"]/text()')
-            if home_goals and away_goals:
-                home_goals, away_goals = map(int, (home_goals[0], away_goals[0]))
+            scores = columns[1].xpath('.//a//span/text()')
+            if len(scores) == 2:
+                home_goals, away_goals = map(int, scores)
             else:
                 # Log a warning if the scores are not found
                 logging.warning(f"Scores not found for game between {home_team} and {away_team} in {file_path}")
