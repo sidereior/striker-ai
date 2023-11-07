@@ -2,8 +2,9 @@ name: Daily Scraping Workflow
 
 on:
   schedule:
+    # Runs at 1:15 AM UTC every day
     - cron: '15 1 * * *'
-  workflow_dispatch:
+  workflow_dispatch:  # This line adds the manual trigger
 
 jobs:
   scrape:
@@ -15,23 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
-      
-      - name: Install Chrome and ChromeDriver
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libxss1 libappindicator1 libindicator7
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome*.deb; sudo apt-get install -y -f || exit 0
-          sudo rm google-chrome*.deb
-          CHROME_VERSION=$(google-chrome --version | cut -f 3 -d ' ' | cut -d '.' -f 1)
-          DRIVERVERSION=$(wget -qO- "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-          wget -N http://chromedriver.storage.googleapis.com/$DRIVERVERSION/chromedriver_linux64.zip -P ~/
-          unzip ~/chromedriver_linux64.zip -d ~/
-          rm ~/chromedriver_linux64.zip
-          sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
-          sudo chmod 0755 /usr/local/bin/chromedriver
-          chromedriver --version
+          python-version: '3.x' # Replace '3.x' with the specific version if needed
 
       - name: Install dependencies
         run: |
@@ -39,8 +24,4 @@ jobs:
           pip install pandas # Add other dependencies if needed
 
       - name: Run scraping script
-        env:
-          PYTHONUNBUFFERED: 1
-        run: |
-          python pre_processing.py
-        # Note: Your pre_processing.py script needs to be adjusted to use Chrome in headless mode
+        run: python pre_processing.py 
