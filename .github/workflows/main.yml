@@ -1,0 +1,28 @@
+name: Daily Scraping Workflow
+
+on:
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: '15 1 * * *'
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x' # Replace '3.x' with the specific version if needed
+
+      - name: Install dependencies
+        run: |
+          pip install selenium
+          pip install pandas # Add other dependencies if needed
+
+      - name: Run scraping script
+        run: python pre_processing.py # Or use the path to your script if it's in a different directory
+
+      # Add additional steps if you need to process and commit files back to the repository
