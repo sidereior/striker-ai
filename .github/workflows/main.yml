@@ -2,8 +2,9 @@ name: Daily Scraping Workflow
 
 on:
   schedule:
-    # Runs at 00:00 UTC every day
+    # Runs at 1:15 AM UTC every day
     - cron: '15 1 * * *'
+  workflow_dispatch:  # This line adds the manual trigger
 
 jobs:
   scrape:
