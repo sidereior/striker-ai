@@ -24,11 +24,6 @@ jobs:
 
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@v1.2.3
-        with:
-          chrome-version: latest  # or specify a specific version
-
-      - name: Set up ChromeDriver
-        uses: nanasess/setup-chromedriver@v1.0.1
 
       - name: Run scraping script
         run: python pre_processing.py
