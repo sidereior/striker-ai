@@ -1,5 +1,6 @@
-name: Daily Scraping Workflow
-
+ - name: Daily Scraping Workflow
+        uses: browser-actions/setup-chrome@v1.2.3
+            
 on:
   schedule:
     # Runs at 1:15 AM UTC every day
