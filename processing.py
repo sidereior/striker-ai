@@ -101,7 +101,7 @@ divisions = ['d2', 'd3', 'naia', 'njcaa', 'd1']
 all_data = pd.DataFrame()
 
 # Loop through all the weeks and divisions based on user input
-for week in range(1, 13):
+for week in range(1, 14):
     if args.division.lower() == 'all':
         for division in divisions:
             df = process_week(week, division)
