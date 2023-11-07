@@ -4,18 +4,26 @@
 - **Batch and Unbatched Processing**
 - **Logging**
 - **Customizable Output**
+- **input data-scraping**
+
 ## Requirements
 - Python 3.x
 - Pandas
 - lxml
 - argparse
+- selenium
 
 ## Installation
 1. Ensure that Python 3.x is installed on your system and copy repo.
 2. Install the required packages (see each package's webpage for other details or run pip install package_name )
 
-## Usage
+## Usage 
 Navigate to the project directory in your terminal or command prompt, and run the script using the following command format:
+
+``` python pre_processing.py ```
+ - running this script will fetch the most recent week's information from topdrawersoccer.com
+ - this should be run every week, and running this again will overwrite the previously stored most recent week's information
+ - after this is run and you have up-to-date infomration, run the following
 
 ``` python processing.py <division> <batched> ```
 - <division>: The soccer division you want to process. Choose from:
