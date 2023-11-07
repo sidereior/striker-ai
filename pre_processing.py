@@ -5,14 +5,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
 
-# Set up Chrome options
-chrome_options = Options()
-chrome_options.add_argument("--headless")  # Ensures Chrome runs headless
-chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
-chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
-
-# Start the WebDriver with Chrome options
-driver = webdriver.Chrome(options=chrome_options)
+# Start the Selenium WebDriver
+driver = webdriver.Chrome()
 
 # Function to save the current page as HTML
 def save_html(division, week):
@@ -33,10 +27,10 @@ def save_html(division, week):
         file_name = f"naia-week{week}.txt"
     elif division == "5":
         file_name = f"njcaa-week{week}.txt"
-    
+
     # Combine everything to get the full file path
     file_path = os.path.join(current_directory, subdirectory, file_name)
-    
+
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(driver.page_source)
     print(f"Saved HTML for Division {division} Week {week}")
