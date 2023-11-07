@@ -5,8 +5,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
 
-# Start the Selenium WebDriver
-driver = webdriver.Chrome()
+# Set up Chrome options
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Ensures Chrome runs headless
+chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
+chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+
+# Start the WebDriver with Chrome options
+driver = webdriver.Chrome(options=chrome_options)
 
 # Function to save the current page as HTML
 def save_html(division, week):
