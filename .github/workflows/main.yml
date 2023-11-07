@@ -1,6 +1,4 @@
- - name: Daily Scraping Workflow
-        uses: browser-actions/setup-chrome@v1.2.3
-            
+name: Daily Scraping Workflow
 on:
   schedule:
     # Runs at 1:15 AM UTC every day
@@ -17,12 +15,15 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x' # Replace '3.x' with the specific version if needed
+          python-version: '3.x'  # Replace '3.x' with the specific version if needed
 
       - name: Install dependencies
         run: |
           pip install selenium
-          pip install pandas # Add other dependencies if needed
+          pip install pandas  # Add other dependencies if needed
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@v1.2.3
 
       - name: Run scraping script
-        run: python pre_processing.py 
+        run: python pre_processing.py
