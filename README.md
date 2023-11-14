@@ -27,7 +27,7 @@ Navigate to the project directory in your terminal or command prompt, and run th
 
 ``` python processing.py <gender> <division> <batched> ```
 
-```<gender>``` The gender of the request you want to process. Either m or f depending on the male or female league.
+```<gender>``` The gender of the request you want to process. Either m or w depending on the mens or womens league.
 
 ```<division>``` The soccer division you want to process. Choose from:
     - d1: Division 1
