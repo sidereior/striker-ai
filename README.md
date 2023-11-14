@@ -1,7 +1,7 @@
 # dsa-tds-scraper
 ## Features
-- **Multiple Divisions**
-- **Batch and Unbatched Processing**
+- **division, week, league info**
+- **Batched and Unbatched Processing**
 - **Logging**
 - **Customizable Output**
 - **input data-scraping**
@@ -25,8 +25,10 @@ Navigate to the project directory in your terminal or command prompt, and run th
  - this should be run every week, and running this again will overwrite the previously stored most recent week's information
  - after this is run and you have up-to-date infomration, run the following
 
-``` python processing.py <division> <batched> ```
-- <division>: The soccer division you want to process. Choose from:
+``` python processing.py <gender> <division> <batched> ```
+- <gender>: The gender of the request you want to process. Either m or f depending on the male or female league.
+
+<division>: The soccer division you want to process. Choose from:
     - d1: Division 1
     - d2: Division 2
     - d3: Division 3
@@ -41,11 +43,11 @@ False: All data consolidated in a single file.
 ## Examples
 Process all weeks and divisions, and save in batched format:
 
-``` python processing.py all True ```
+``` python processing.py f all True ```
 
 Process all weeks of division d1, and save in a single file:
 
-```python processing.py d1 False ```
+```python processing.py m d1 False ```
 
 ## Output
 The processed data is saved in the outputs directory. The naming convention of the output files depends on your specified options:
