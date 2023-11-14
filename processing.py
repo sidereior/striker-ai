@@ -27,10 +27,10 @@ def extract_conference(info_string):
     conference = re.sub(r'^[^a-zA-Z]*', '', info_string)
     return conference
 
-# Define a function to process a single week for a given division
-def process_week(week_number, division):
-    # Construct file path based on division and week number
-    file_path = f'inputs/{division}-week{week_number}.txt'
+# Define a function to process a single week for a given division and gender
+def process_week(week_number, division, gender):
+    # Construct file path based on gender, division, and week number
+    file_path = f'inputs/{gender}-{division}-week{week_number}.txt'
     if not os.path.exists(file_path):
         logging.warning(f"File not found: {file_path}")
         return None
@@ -80,11 +80,17 @@ def process_week(week_number, division):
 
 # Set up command-line argument parsing
 parser = argparse.ArgumentParser(description='Process soccer game data.')
+parser.add_argument('gender', type=str, help='The gender of the league (m or w)')
 parser.add_argument('division', type=str, help='The division to process (d1, d2, d3, naia, njcaa, or all)')
 parser.add_argument('batched', type=str, help='Whether the output should be batched (True or False)')
 
 # Parse command-line arguments
 args = parser.parse_args()
+
+# Validate gender argument
+if args.gender.lower() not in ['m', 'w']:
+    print("Invalid argument for gender. Please choose 'm' for men's league or 'w' for women's league.")
+    exit()
 
 # Validate batched argument
 if args.batched.lower() not in ['true', 'false']:
@@ -95,7 +101,7 @@ if args.batched.lower() not in ['true', 'false']:
 args.batched = args.batched.lower() == 'true'
 
 # List of all possible divisions
-divisions = ['d2', 'd3', 'naia', 'njcaa', 'd1']
+divisions = ['d1', 'd2', 'd3', 'naia', 'njcaa']
 
 # Initialize a DataFrame to store all data if not batching
 all_data = pd.DataFrame()
@@ -104,19 +110,19 @@ all_data = pd.DataFrame()
 for week in range(1, 14):
     if args.division.lower() == 'all':
         for division in divisions:
-            df = process_week(week, division)
+            df = process_week(week, division, args.gender.lower())
             if df is not None:
                 if args.batched:
-                    csv_file_path = f'outputs/{division}_week{week}_data_batch_{batch_id}.csv'
+                    csv_file_path = f'outputs/{args.gender.lower()}-{division}_week{week}_data_batch_{batch_id}.csv'
                     df.to_csv(csv_file_path, index=False)
                     print(f"Data for {division} division, week {week} has been saved to {csv_file_path}")
                 else:
                     all_data = pd.concat([all_data, df], ignore_index=True)
     elif args.division.lower() in divisions:
-        df = process_week(week, args.division.lower())
+        df = process_week(week, args.division.lower(), args.gender.lower())
         if df is not None:
             if args.batched:
-                csv_file_path = f'outputs/{args.division.lower()}_week{week}_data_batch_{batch_id}.csv'
+                csv_file_path = f'outputs/{args.gender.lower()}-{args.division.lower()}_week{week}_data_batch_{batch_id}.csv'
                 df.to_csv(csv_file_path, index=False)
                 print(f"Data for {args.division.lower()} division, week {week} has been saved to {csv_file_path}")
             else:
@@ -127,8 +133,8 @@ for week in range(1, 14):
 
 if not args.batched:
     if args.division.lower() == 'all':
-        csv_file_path = f'outputs/all_unbatched_{batch_id}.csv'
+        csv_file_path = f'outputs/{args.gender.lower()}-all_unbatched_{batch_id}.csv'
     else:
-        csv_file_path = f'outputs/{args.division.lower()}_unbatched_{batch_id}.csv'
+        csv_file_path = f'outputs/{args.gender.lower()}-{args.division.lower()}_unbatched_{batch_id}.csv'
     all_data.to_csv(csv_file_path, index=False)
     print(f"All data has been saved to {csv_file_path}")
