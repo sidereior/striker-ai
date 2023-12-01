@@ -26,9 +26,10 @@ Navigate to the project directory in your terminal or command prompt, and run th
  - after this is run and you have up-to-date infomration, run the following
 
 ``` python processing.py <gender> <division> <batched> ```
-- <gender>: The gender of the request you want to process. Either m or f depending on the male or female league.
 
-<division>: The soccer division you want to process. Choose from:
+```<gender>``` The gender of the request you want to process. Either m or w depending on the mens or womens league.
+
+```<division>``` The soccer division you want to process. Choose from:
     - d1: Division 1
     - d2: Division 2
     - d3: Division 3
@@ -36,7 +37,7 @@ Navigate to the project directory in your terminal or command prompt, and run th
     - njcaa: NJCAA
     - all: All divisions
 
-<batched>:
+```<batched>```
 True: Output in batched format (separate files for each week and division).
 False: All data consolidated in a single file.
 
