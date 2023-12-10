@@ -1,46 +1,44 @@
 import fitz  # PyMuPDF
-import pandas as pd
-import re
+import os
+import pytesseract  # For OCR
+import time
+import requests
+from PIL import Image
 
-def extract_data_from_pdf(pdf_path):
-    # Open the PDF
+# Function to convert specified pages of PDF to PNG, perform OCR and save text to files
+def convert_specified_pdf_pages_to_png_ocr(pdf_path, pages_to_scrape, output_folder):
+    # Open the PDF file
     doc = fitz.open(pdf_path)
+    
+    # Create the output folder for text if it doesn't exist
+    output_text_folder = os.path.join(output_folder, "text_outputs")
+    os.makedirs(output_text_folder, exist_ok=True)
 
-    # Extract text from each page
-    full_text = ""
-    for page in doc:
-        full_text += page.get_text("text")
+    # Iterate over each specified page of the PDF
+    for page_num in pages_to_scrape:
+        # Load the page
+        page = doc.load_page(page_num)
+
     doc.close()
 
-    # Find the player's name from the file name
-    player_name = pdf_path.split('/')[-1].split('_')[0].split('-')[-1]
+# Define the path to the PDF file and output folder
+pdf_path = 'data/pd1.pdf'  # Replace with your actual PDF file path
+output_folder = 'data'  # Replace with your actual output folder path
+pages_to_scrape = [5, 6, 7, 8, 9, 10]  # Pages to scrape, zero-indexed
 
-    # Regex pattern to match the statistics format
-    pattern = re.compile(r'([A-Za-z\s/]+)\s+([0-9/]+)\s+[0-9%]+\s+([0-9/]+)\s+[0-9%]+\s+([0-9/]+)')
+# Call the function to convert and OCR specified pages
+convert_specified_pdf_pages_to_png_ocr(pdf_path, pages_to_scrape, output_folder)
 
-    # Find all matches
-    matches = pattern.findall(full_text)
 
-    # Process and structure the data
-    data = []
-    for match in matches:
-        statistic, match_stat, first_half_stat, second_half_stat = match
-        data.append([statistic.strip(), match_stat.strip(), first_half_stat.strip(), second_half_stat.strip()])
+files = {'pdf': ('pd1.pdf', open('data/pd1.pdf', 'rb'))}
+response = requests.post('http://localhost:1616', files=files, data={'lang': 'de'})
+id = response.json()['id']
 
-    # Create a DataFrame
-    df = pd.DataFrame(data, columns=['Statistic', 'Match Stat', '1st Half Stat', '2nd Half Stat'])
-    df.insert(0, 'Player Name', player_name)
-
-    return df
-
-# Path to the PDF file
-pdf_path = 'path_to_your_pdf_file.pdf'
-
-# Extract data and create a DataFrame
-df = extract_data_from_pdf(pdf_path)
-
-# Save the DataFrame to a CSV file
-csv_path = 'path_to_your_csv_file.csv'
-df.to_csv(csv_path, index=False)
-
-print(f"Data extracted and saved to {csv_path}")
+while True:
+    r = requests.get(f"http://localhost:1616/update/{id}")
+    j = r.json()
+    if 'text' in j:
+        break
+    print('waiting...')
+    time.sleep(1)
+print(j['text'])
