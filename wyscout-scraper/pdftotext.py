@@ -56,6 +56,7 @@ tabula.convert_into("data/test2.pdf", csv_file, output_format="csv", pages="all"
 df = pd.read_csv(csv_file)
 
 # extract headers and convert them to string
+headers = df.head()
 headers = df.columns.tolist()
 headers_string = ", ".join(headers)
 
@@ -185,7 +186,7 @@ Playerplayedaccurateaccurateaccuratepasses / accurateaccurateaccuratethird / acc
 100%-1--112.3, Unnamed: 1, Unnamed: 2, Unnamed: 3, Unnamed: 4, Unnamed: 5, Unnamed: 6, Unnamed: 7, Unnamed: 8, Unnamed: 9, Unnamed: 10, Unnamed: 11, Unnamed: 12, Unnamed: 13, Unnamed: 14
 """
 
-# Regular expression to capture player's data
+# Regex pattern to extract the relevant data
 pattern = r"(\d+[A-Z]\. [A-Za-z�]+)\d+'\d+/\d+ \d+%(\d+/\d+ \d+%)?(\d+/\d+ \d+%)?(\d+/\d+ \d+%)?(\d+/\d+ \d+%)?(\d+/\d+ \d+%)?(\d+/\d+ \d+%)?(\d+/\d+ \d+%)?(-\d+)?-?(-\d+)?-?(-\d+)?-?(\d+\.\d+)"
 
 # Applying regex to extract and format data
@@ -193,6 +194,11 @@ formatted_data = ';'.join([
     ','.join(filter(None, match)) 
     for match in re.findall(pattern, data)
 ])
+
+
+
+print(formatted_data)
+
 
 
 
