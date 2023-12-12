@@ -1,5 +1,6 @@
 import pdfplumber
 import json
+import re
 
 pdf_path = 'test.pdf'
 
@@ -10,6 +11,25 @@ def extract_and_format_data(page_number):
                    "Third assists", "Shot assists"]
 
     formatted_data = []
+
+    def process_stat(stat):
+        # Check if the input is alphanumeric, ends with a single quote, or is a single dash
+        if re.match('^[a-zA-Z0-9]*$', stat) or stat.endswith("'") or stat == '-':
+            return stat
+        elif '/' not in stat:  # If stat is a number
+            return float(stat)
+        else:  # If stat is a fraction and a percentage
+            fraction, percent = stat.split('%')[0].split('/')
+            numerator = int(fraction)
+            denominator = ''
+            percent = percent.lstrip('0')  # remove leading zeros from percent
+            for digit in percent:
+                denominator += digit
+                if denominator == '0':  # If denominator is zero
+                    return f'{numerator}/{denominator}'
+                elif numerator/int(denominator) == int(percent)/100:  # If the fraction matches the percentage
+                    return f'{numerator}/{denominator}'
+            return 'ERROR'  # If the fraction doesn't match the percentage and it's over 100%
 
     with pdfplumber.open(pdf_path) as pdf:
         page = pdf.pages[page_number]
@@ -22,16 +42,12 @@ def extract_and_format_data(page_number):
                     start_processing = True
                     continue
                 if start_processing and line.strip():
-                    # Splitting the line into segments based on multiple spaces
                     segments = line.split(maxsplit=2)
                     if len(segments) < 3:
-                        continue  # Skip if the line doesn't have enough segments
+                        continue
 
                     player_number, player_name, stats_str = segments
-                    # Removing percentage signs and splitting the stats
-                    stats = stats_str.replace('%', '').split()
-                    # Adjust the stats to match the format
-                    stats = [stat if '/' in stat else stat.split('/')[0] for stat in stats]
+                    stats = [process_stat(stat) for stat in stats_str.split()]
 
                     formatted_stats = dict(zip(data_format, stats))
                     formatted_player_data = {"Player Number": player_number, "Player Name": player_name}
