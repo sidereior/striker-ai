@@ -2,6 +2,7 @@
 import pdfplumber
 import json
 import re
+import time
 import datetime
 
 pdf_path = 'test.pdf'
@@ -19,18 +20,32 @@ def extract_and_format_data(page_number):
         if stat.endswith("'") or stat == '-' or '/' not in stat:
             return stat
         else:  # If stat is a fraction and a percentage
-            fraction, percent = stat.split('%')[0].split('/')
-            numerator = int(fraction)
-            denominator = ''
-            percent = percent.lstrip('0')  # remove leading zeros from percent
-            for digit in percent:
-                denominator += digit
-                if denominator == '0':  # If denominator is zero
-                    return f'{numerator}/{denominator}'
-                elif numerator/int(denominator) == int(percent)/100:  # If the fraction matches the percentage
-                    return f'{numerator}/{denominator}'
-            return 'ERROR:'  # If the fraction doesn't match the percentage and it's over 100%
-    
+            if stat.endswith('%'):
+                stat = stat[:-1]
+                split_stat = stat.split('/')
+                denom = split_stat[0]
+                #15/1067
+                #1067
+                num = split_stat[1]
+                i = 1
+                first_num = num[:len(num)-0]
+                while len(first_num) > 0:
+                    first_num = num[:len(num)-i]
+                    second_num = num[len(num)-i:]
+                    result = int(first_num) / int(denom)
+                    if first_num:  # Check if first_num is not empty
+                        result = int(first_num) / int(denom)
+                        result = result * 100
+                        # Cast result to int for comparison
+                        if int(result) == int(second_num) or int(result) == int(second_num) + 1 or int(result) == int(second_num) - 1:
+                            return str(denom) + "/" + str(first_num)
+                    else:
+                        break  # Break the loop if first_num is empty to avoid errors
+
+                    i += 1
+                return 'PARSE ERROR'
+            return 'INPUT ERROR'  # If no matching fraction is found
+              
     # Generate a timestamped filename
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     output_filename = f'output{timestamp}.txt'
