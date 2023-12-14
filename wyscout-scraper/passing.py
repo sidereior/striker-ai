@@ -1,4 +1,3 @@
-
 import pdfplumber
 import json
 import re
@@ -56,7 +55,7 @@ def extract_and_format_data(page_number):
         if text:
             lines = text.split('\n')
             start_processing = False
-            for line in lines:
+            for line in lines[:-1]:
                 # Write each line to the file
                 output_file.write(line + '\n')
 
@@ -79,15 +78,12 @@ def extract_and_format_data(page_number):
                     player_name_full = player_name_full.strip() 
                     #player_name = segments[1:indexToGoTo+1]
                     stats_str = segments[indexToGoTo+1:]
-                    for i in stats_str:
-                        print(i)
                     stats = [process_stat(stat) for stat in stats_str]
-
                     formatted_stats = dict(zip(data_format, stats))
                     formatted_player_data = {"Player Number": player_number, "Player Name": player_name_full}
                     formatted_player_data.update(formatted_stats)
-
                     formatted_data.append(formatted_player_data)
+
     return formatted_data
 
 # Extracting and formatting data from page 7
@@ -95,4 +91,10 @@ formatted_data_page_7 = extract_and_format_data(6)  # Page numbers are 0-indexed
 
 # Convert to JSON
 json_data = json.dumps(formatted_data_page_7, indent=4)
-print(json_data)
+
+timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+json_output_filename = f'passing_table_page_7_{timestamp}.json'
+
+# Write JSON data to a file
+with open(json_output_filename, 'w') as file:
+    file.write(json_data)
