@@ -1,12 +1,49 @@
 import pdfplumber
 import json
 import re
-import time
 import datetime
 
-pdf_path = 'test.pdf'
+# List of paths to PDF files
+pdf_paths = ['test1.pdf', 'test2.pdf', 'test3.pdf']  # Add your PDF file paths here
 
-def extract_and_format_data(page_number):
+def find_pages_with_string(pdf_path, target_string):
+    pages_with_string = []
+    with pdfplumber.open(pdf_path) as pdf:
+        for i, page in enumerate(pdf.pages):
+            text = page.extract_text()
+            if text and target_string in text:
+                pages_with_string.append(i)
+    return pages_with_string
+
+def process_stat(stat):
+    if stat.endswith("'") or stat == '-' or '/' not in stat:
+        return stat
+    else:  # If stat is a fraction and a percentage
+        if stat.endswith('%'):
+            stat = stat[:-1]
+            split_stat = stat.split('/')
+            denom = split_stat[0]
+            num = split_stat[1]
+            i = 1
+            first_num = num[:len(num)-0]
+            while len(first_num) > 0:
+                first_num = num[:len(num)-i]
+                second_num = num[len(num)-i:]
+                if first_num:  # Check if first_num is not empty
+                    result = int(first_num) / int(denom)
+                    result = result * 100
+                    if int(result) == int(second_num) or int(result) == int(second_num) + 1 or int(result) == int(second_num) - 1:
+                        return str(denom) + "/" + str(first_num)
+                else:
+                    break  # Break the loop if first_num is empty to avoid errors
+
+                i += 1
+            return 'PARSE ERROR'
+        elif re.match(r"^\d+/\d+$", stat):
+            return stat
+        return 'INPUT ERROR'  # If no matching fraction is found
+
+def extract_and_format_data(pdf_path, page_number):
     data_format = ["Min. played", "Forward passes", "Back passes", "Lateral passes", 
                    "Short-med passes", "Long passes", "Prog. passes", "Passes final 3rd", 
                    "Through passes", "Deep completions", "Key passes", "Second assists", 
@@ -14,51 +51,13 @@ def extract_and_format_data(page_number):
 
     formatted_data = []
 
-    def process_stat(stat):
-        # Modified regex to include special characters
-        if stat.endswith("'") or stat == '-' or '/' not in stat:
-            return stat
-        else:  # If stat is a fraction and a percentage
-            if stat.endswith('%'):
-                stat = stat[:-1]
-                split_stat = stat.split('/')
-                denom = split_stat[0]
-                #15/1067
-                #1067
-                num = split_stat[1]
-                i = 1
-                first_num = num[:len(num)-0]
-                while len(first_num) > 0:
-                    first_num = num[:len(num)-i]
-                    second_num = num[len(num)-i:]
-                    result = int(first_num) / int(denom)
-                    if first_num:  # Check if first_num is not empty
-                        result = int(first_num) / int(denom)
-                        result = result * 100
-                        # Cast result to int for comparison
-                        if int(result) == int(second_num) or int(result) == int(second_num) + 1 or int(result) == int(second_num) - 1:
-                            return str(denom) + "/" + str(first_num)
-                    else:
-                        break  # Break the loop if first_num is empty to avoid errors
-
-                    i += 1
-                return 'PARSE ERROR'
-            return 'INPUT ERROR'  # If no matching fraction is found
-              
-    # Generate a timestamped filename
-    timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-    output_filename = f'output{timestamp}.txt'
-
-    with pdfplumber.open(pdf_path) as pdf, open(output_filename, 'w') as output_file:
+    with pdfplumber.open(pdf_path) as pdf:
         page = pdf.pages[page_number]
         text = page.extract_text()
         if text:
             lines = text.split('\n')
             start_processing = False
             for line in lines[:-1]:
-                # Write each line to the file
-                output_file.write(line + '\n')
-
                 if "Player" in line:
                     start_processing = True
                     continue
@@ -72,11 +71,7 @@ def extract_and_format_data(page_number):
                             indexToGoTo = segment_index-1
                             break
                             
-                    player_name_full = ""
-                    for i in range(1, indexToGoTo+1, 1):
-                       player_name_full += segments[i] + " " 
-                    player_name_full = player_name_full.strip() 
-                    #player_name = segments[1:indexToGoTo+1]
+                    player_name_full = " ".join(segments[1:indexToGoTo+1]).strip()
                     stats_str = segments[indexToGoTo+1:]
                     stats = [process_stat(stat) for stat in stats_str]
                     formatted_stats = dict(zip(data_format, stats))
@@ -86,14 +81,32 @@ def extract_and_format_data(page_number):
 
     return formatted_data
 
-# Extracting and formatting data from page 7
-formatted_data_page_7 = extract_and_format_data(6)  # Page numbers are 0-indexed
+# List of paths to PDF files
+pdf_paths = ['test1.pdf', 'test2.pdf', 'test3.pdf']  # Add your PDF file paths here
 
-# Convert to JSON
-json_data = json.dumps(formatted_data_page_7, indent=4)
+# Initialize a list to collect data from all PDFs
+all_formatted_data = []
 
+# Target string to search for in each PDF
+target_string = "Minutes Forward passes / Back passes / Lateral passes / Short + medium Long passes / Progressive passes / Passes to final Through passes / Deep Key Second / Shot Average pass"
+
+# Iterate over each PDF path
+for pdf_path in pdf_paths:
+    # Find the pages with the target string
+    pages_to_process = find_pages_with_string(pdf_path, target_string)
+
+    # Extracting and formatting data from the identified pages of each PDF
+    for page_number in pages_to_process:
+        formatted_data = extract_and_format_data(pdf_path, page_number)
+        # Append extracted data to the collective list
+        all_formatted_data.extend(formatted_data)
+
+# Convert all data to JSON
+json_data = json.dumps(all_formatted_data, indent=4)
+
+# Generate a timestamped filename for the JSON output
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-json_output_filename = f'passing_table_page_7_{timestamp}.json'
+json_output_filename = f'combined_passing_tables_{timestamp}.json'
 
 # Write JSON data to a file
 with open(json_output_filename, 'w') as file:
