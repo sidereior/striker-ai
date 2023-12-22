@@ -3,9 +3,6 @@ import json
 import re
 import datetime
 
-# List of paths to PDF files
-pdf_paths = ['test1.pdf', 'test2.pdf', 'test3.pdf']  # Add your PDF file paths here
-
 def find_pages_with_string(pdf_path, target_string):
     pages_with_string = []
     with pdfplumber.open(pdf_path) as pdf:

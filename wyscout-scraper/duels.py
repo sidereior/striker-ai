@@ -3,9 +3,6 @@ import json
 import re
 import datetime
 
-# List of paths to PDF files
-pdf_paths = ['test1.pdf']  # Add your PDF file paths here
-
 def find_pages_with_string(pdf_path, target_string):
     pages_with_string = []
     with pdfplumber.open(pdf_path) as pdf:
@@ -41,19 +38,23 @@ def process_stat(stat):
             return 'PARSE ERROR'
         elif re.match(r"^\d+/\d+$", stat):
             return stat
+        elif re.match(r"\d+\/\d+\.\d+", stat):
+            return stat
         return 'INPUT ERROR'  # If no matching fraction is found
 
-def extract_and_format_data(pdf_path, page_number, filter, after_or_before):
-    data_format = ["Min. played", "Forward passes", "Back passes", "Lateral passes", 
-                   "Short-med passes", "Long passes", "Prog. passes", "Passes final 3rd", 
-                   "Through passes", "Deep completions", "Key passes", "Second assists", 
-                   "Third assists", "Shot assists"]
-
+def extract_and_format_data(pdf_path, page_number, filter):
+    data_format =["Min. played", "Defensive Duels/Won", "Offensive Duels/Won", "Aerial Duels/Won", 
+                   "Loose Ball Duels/Won", "Shots Blocked", "Interception/Clearances", "Sliding Tackles/Won", 
+                   "Fouls/Suffered", "Free kicks", "Direct Free kicks", "Corners Served", "Throw-Ins"] 
     formatted_data = []
 
     with pdfplumber.open(pdf_path) as pdf:
         page = pdf.pages[page_number]
         text = page.extract_text()
+        if "Touches in" in text:
+            text = text.split(filter)[1]
+        else:
+            text = text.split(filter)[0]
         if text:
             lines = text.split('\n')
             start_processing = False
@@ -82,24 +83,22 @@ def extract_and_format_data(pdf_path, page_number, filter, after_or_before):
     return formatted_data
 
 # List of paths to PDF files
-pdf_paths = ['test1.pdf']  # Add your PDF file paths here
-
+pdf_paths = ['test1.pdf', 'test2.pdf', 'test3.pdf']  # Add your PDF file paths here
 # Initialize a list to collect data from all PDFs
 all_formatted_data = []
 
 # Target string to search for in each PDF
-target_string = "Throw-ins"
+target_string = "Duels Set pieces"
 
 # Iterate over each PDF path
 for pdf_path in pdf_paths:
     # Find the pages with the target string
-    pages_to_process = find_pages_with_string(pdf_path, target_string, "test")
-
-    #check if both words on same page
+    filter = "Duels Set pieces"
+    pages_to_process = find_pages_with_string(pdf_path, target_string)
 
     # Extracting and formatting data from the identified pages of each PDF
     for page_number in pages_to_process:
-        formatted_data = extract_and_format_data(pdf_path, page_number)
+        formatted_data = extract_and_format_data(pdf_path, page_number, filter)
         # Append extracted data to the collective list
         all_formatted_data.extend(formatted_data)
 
@@ -108,7 +107,7 @@ json_data = json.dumps(all_formatted_data, indent=4)
 
 # Generate a timestamped filename for the JSON output
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-json_output_filename = f'combined_passing_tables_{timestamp}.json'
+json_output_filename = f'combined_duels_tables_{timestamp}.json'
 
 # Write JSON data to a file
 with open(json_output_filename, 'w') as file:
