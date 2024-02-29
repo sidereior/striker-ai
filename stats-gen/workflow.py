@@ -1,4 +1,4 @@
-# Authors: Alexander Nanda, Levon Sirian, and Joseph Cruz
+# Authors: Alexander Nanda, Levon Sarian, and Joseph Cruz
 # Description:
 #   This file is the main workflow file for the stats-gen project.
 #   It is responsible for orchestrating the agents and tools to
