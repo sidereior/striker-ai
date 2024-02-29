@@ -24,8 +24,10 @@ os.environ["OPENAI_API_KEY"] = ""
 from crewai import Agent
 from crewai import Crew
 from crewai import Process
-from langchain_community.tools import DuckDuckGoSearchRun
-search_tool = DuckDuckGoSearchRun()
+from langchain_community.utilities import SerpAPIWrapper
+search_tool = SerpAPIWrapper()
+
+
 
 # Topic for the crew run
 topic = 'Inter Milan'
