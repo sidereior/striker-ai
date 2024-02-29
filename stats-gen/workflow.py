@@ -1,75 +1,63 @@
-import sys
-from crewai import Agent, Task, Crew, Process
-from langchain.tools import tool
+import os
+os.environ["OPENAI_API_KEY"] = "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"
 
-# Placeholder implementations for tools (to be replaced with actual logic)
-@tool
-def duckduckgo_search(query):
-    # Implement the DuckDuckGo search logic here
-    return f"Search results for {query}"
+from crewai import Agent
+from crewai import Crew
+from crewai import Process
+from langchain_community.tools import DuckDuckGoSearchRun
+search_tool = DuckDuckGoSearchRun()
 
-@tool
-def validate_data(data):
-    # Validation logic
-    return True
+# Topic for the crew run
+topic = 'Inter Milan'
 
-@tool
-def verify_data(data):
-    # Verification logic
-    return True
-
-# Enhanced Agent definitions with delegation capabilities
-research_agent = Agent(
-    role='Researcher',
-    goal='Find soccer player information using DuckDuckGo search',
-    backstory='Specializes in extracting sports data from web sources.',
-    tools=[duckduckgo_search]
+# Creating a senior researcher agent with memory and verbose mode
+researcher = Agent(
+  role='Senior Researcher',
+  goal=f'Research why {topic} are so good this season',
+  verbose=True,
+  memory=True,
+  backstory="",
+  tools=[search_tool],
+  allow_delegation=True
 )
 
-formatter_agent = Agent(
-    role='Formatter',
-    goal='Format soccer player data into JSON',
-    backstory='Converts raw text data into structured JSON format.',
-    verbose=True
+# Creating a writer agent with custom tools and delegation capability
+writer = Agent(
+  role='Writer',
+  goal=f'Narrate compelling stories about {topic} this season',
+  verbose=True,
+  memory=True,
+  backstory="",
+  tools=[search_tool],
+  allow_delegation=False
+)
+from crewai import Task
+
+# Research task
+research_task = Task(
+  description=f"""Identify the reasons {topic} are so successful this season.""",
+  expected_output='A comprehensive 3 paragraphs long report on the latest AI trends.',
+  tools=[search_tool],
+  agent=researcher,
 )
 
-validator_agent = Agent(
-    role='Validator',
-    goal='Validate data for completeness and correctness',
-    backstory='Ensures data integrity and correctness.',
-    tools=[validate_data],
-    verbose=True
+# Writing task with language model configuration
+write_task = Task(
+  description=f"""Compose an insightful article on {topic}.
+  Focus on the latest trends and their impacting the sport.
+  This article should be easy to understand, engaging, and positive.""",
+  expected_output=f'A 4 paragraph article on {topic}.',
+  tools=[search_tool],
+  agent=writer,
+  async_execution=False,
+  output_file='new-blog-post.md'  # Example of output customization
 )
-
-verifier_agent = Agent(
-    role='Verifier',
-    goal='Verify the accuracy of soccer player data',
-    backstory='Cross-references data with trusted sources for accuracy.',
-    tools=[verify_data],
-    verbose=True
-)
-
-# Tasks with delegation logic (conceptual)
-# Note: Actual delegation logic would require handling within the task execution flow, potentially with custom callbacks or inter-agent communication mechanisms
-
-# Setup the crew with advanced capabilities and delegation logic
+# Forming the tech-focused crew with enhanced configurations
 crew = Crew(
-    agents=[research_agent, formatter_agent, validator_agent, verifier_agent],
-    tasks=[],
-    process=Process.sequential,
-    verbose=True
+  agents=[researcher, writer],
+  tasks=[research_task, write_task],
+  process=Process.sequential  # Optional: Sequential task execution is default
 )
-
-def main(player_name):
-    print("Starting advanced CrewAI with delegation...")
-    # Implement the advanced logic for task delegation and execution here
-    print(f"Processing data for player: {player_name}")
-    # Placeholder for crew kickoff and task processing
-    # crew.kickoff(extra_content=player_name)
-
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python script.py <soccer player name>")
-        sys.exit(1)
-    player_name = sys.argv[1]
-    main(player_name)
+# Starting the task execution process with enhanced feedback
+result = crew.kickoff()
+print(result)
