@@ -25,8 +25,12 @@ from crewai import Agent
 from crewai import Crew
 from crewai import Process
 from langchain_community.utilities import SerpAPIWrapper
-search_tool = SerpAPIWrapper()
-
+params = {
+    "engine": "google",
+    "gl": "us",
+    "hl": "en",
+}
+search_tool = SerpAPIWrapper(params=params)
 
 
 # Topic for the crew run
