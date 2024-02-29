@@ -24,7 +24,10 @@ os.environ["OPENAI_API_KEY"] = ""
 from crewai import Agent
 from crewai import Crew
 from crewai import Process
+from crewai import Task
+from langchain_community.utilities import ChatOpenAI
 from langchain_community.utilities import SerpAPIWrapper
+
 params = {
     "engine": "google",
     "gl": "us",
@@ -34,11 +37,11 @@ search_tool = SerpAPIWrapper(params=params)
 
 
 # Player for the crew to run
-topic = ''
+playerInfo = ''
 
 # Search query modifier agent with custom tools and delegation capability
 searcher_eval = Agent(
-  role='Edward, Expert Search Query Generator',
+  role='Edward, Expert Search Query Consultor',
   goal=f'Please evaluate current search results and modify the search query to improve the results for {topic}.',
   verbose=True,
   memory=True,
@@ -47,42 +50,64 @@ searcher_eval = Agent(
   allow_delegation=True
 )
 
-# 
+# Expert searcher based upon the given playerInfo. 
 searcher_gen = Agent(
-  role='Writer',
-  goal=f'Narrate compelling stories about {topic} this season',
+  role='Sam, Expert Searcher',
+  goal=f'Find sports information online relevent to this specific player: {playerInfo}', 
   verbose=True,
   memory=True,
-  backstory="",
+  backstory="You are an expert in searching for specific information and statistics for particular sports players. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
   tools=[search_tool],
-  allow_delegation=False
+  allow_delegation=True
 )
-from crewai import Task
 
-# Research task
+# Resarch task
 research_task = Task(
-  description=f"""Identify the reasons {topic} are so successful this season.""",
-  expected_output='A comprehensive 3 paragraphs long report on the latest AI trends.',
+  description=f"""Gather and research information onlne about this specific sports player: {playerInfo} """,
+  expected_output='A specific curation of high quality statistics and information about the player. Your response should be quantative-results focused and include all possible statistics that exist about the player online, including from specific games, seasons, teams, and live data from the player. The paragraph can be quite long, but should include at least 30 different quantative stats about the player online.',
   tools=[search_tool],
-  agent=researcher,
+  agent=searcher_gen,
 )
 
 # Writing task with language model configuration
-write_task = Task(
-  description=f"""Compose an insightful article on {topic}.
-  Focus on the latest trends and their impacting the sport.
-  This article should be easy to understand, engaging, and positive.""",
-  expected_output=f'A 4 paragraph article on {topic}.',
-  tools=[search_tool],
-  agent=writer,
+output_validation = Task(
+  description=f"""Generate a json output filled with all included stats and player information, 
+  given the context from the research_task Task about {playerInfo}.
+  """,
+  expected_output='You output JSON that includes all of the quantitative information about the player from the given research_task. You also preform analysis on the information and automatically generate graphs and trend insights based upon this data, and use your agents to preform analysis, and validate the output to be turned into a json output.',
+  # two agents: 1st analyze the data 
+    # 2nd validate the output and turn into json based on analyis (and including raw data)
+  tools=[chatopneai_placeholder],
+  agent=output_analyzer, output_validator,
+  context=[research_task],
   async_execution=False,
-  output_file='new-blog-post.md'  # Example of output customization
+  output_file='eval_timestamp.json'  # Example of output customization
+)
+output_analyzer = Agent(
+  role='Adam, Expert Searcher',
+  goal=f'Find sports information online relevent to this specific player: {playerInfo}', 
+  verbose=True,
+  memory=True,
+  backstory="You are an expert in searching for specific information and statistics for particular sports players. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
+  tools=[search_tool],
+  allow_delegation=True
+)
+
+output_validator = Agent(
+  role='Vlad, Expert Validator',
+  goal=f'Find sports information online relevent to this specific player: {playerInfo}', 
+  verbose=True,
+  memory=True,
+  backstory="You are an expert in searching for specific information and statistics for particular sports players. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
+  tools=[search_tool],
+  allow_delegation=True
 )
 # Forming the tech-focused crew with enhanced configurations
 crew = Crew(
-  agents=[researcher, writer],
-  tasks=[research_task, write_task],
-  process=Process.sequential  # Optional: Sequential task execution is default
+  agents=[searcher_gen, searcher_eval],
+  tasks=[research_task, output_validation],
+  manager_llm=ChatOpenAI(temperature=0, model="gpt-4"),
+  process=Process.hierarchical 
 )
 # Starting the task execution process with enhanced feedback
 result = crew.kickoff()
