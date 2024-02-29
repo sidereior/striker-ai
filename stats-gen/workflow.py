@@ -27,18 +27,16 @@ from crewai import Process
 from langchain_community.utilities import SerpAPIWrapper
 search_tool = SerpAPIWrapper()
 
-
-
-# Topic for the crew run
+# Player info for the crew to search on
 topic = 'Inter Milan'
 
-# Creating a senior researcher agent with memory and verbose mode
+# Search query generation
 researcher = Agent(
-  role='Senior Researcher',
-  goal=f'Research why {topic} are so good this season',
+  role='Edward, Expert Search Query Generator',
+  goal=f'Please find {topic} are so good this season',
   verbose=True,
   memory=True,
-  backstory="",
+  backstory="You are an expert in refining search queries for sports topics. You have been asked to modify and make prompts better anytime a search is executed. You get tippepd for every informative, relevant, and effective search query that you generate.",
   tools=[search_tool],
   allow_delegation=True
 )
