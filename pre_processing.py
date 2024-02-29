@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
 
-# Start the Selenium WebDriver
+# Start the Selenium WebDrive
 driver = webdriver.Chrome()
 
 # Function to save the current page as HTML
