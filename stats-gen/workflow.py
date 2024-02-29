@@ -1,5 +1,24 @@
+# Authors: Alexander Nanda, Levon Sirian, and Joseph Cruz
+# Description:
+#   This file is the main workflow file for the stats-gen project.
+#   It is responsible for orchestrating the agents and tools to
+#   extract, analyze, and adapt player statistics from various sources.
+#   Later will be made into seperate files for each agent, tool, and task
+# 
+#  tools we know we can use (all langchain plugins):
+#   Chat gpt plguins (Agones, diagram maker, graph gen)
+#   DuckDuckGoSearchRun (search tool)
+#   Custom tool: MonsterAPI (js port) 
+#      - Later expanding monster using goldeneye
+#   Google Search API
+#   serper.dev
+#   Nuclia Understanding
+#   requests
+#   youtube search
+#   
+
 import os
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = ""
 
 from crewai import Agent
 from crewai import Crew
