@@ -25,15 +25,21 @@ from crewai import Agent
 from crewai import Crew
 from crewai import Process
 from langchain_community.utilities import SerpAPIWrapper
-search_tool = SerpAPIWrapper()
+params = {
+    "engine": "google",
+    "gl": "us",
+    "hl": "en",
+}
+search_tool = SerpAPIWrapper(params=params)
 
-# Player info for the crew to search on
-topic = 'Inter Milan'
 
-# Search query generation
-researcher = Agent(
+# Player for the crew to run
+topic = ''
+
+# Search query modifier agent with custom tools and delegation capability
+searcher_eval = Agent(
   role='Edward, Expert Search Query Generator',
-  goal=f'Please find {topic} are so good this season',
+  goal=f'Please evaluate current search results and modify the search query to improve the results for {topic}.',
   verbose=True,
   memory=True,
   backstory="You are an expert in refining search queries for sports topics. You have been asked to modify and make prompts better anytime a search is executed. You get tippepd for every informative, relevant, and effective search query that you generate.",
@@ -41,8 +47,8 @@ researcher = Agent(
   allow_delegation=True
 )
 
-# Creating a writer agent with custom tools and delegation capability
-writer = Agent(
+# 
+searcher_gen = Agent(
   role='Writer',
   goal=f'Narrate compelling stories about {topic} this season',
   verbose=True,
