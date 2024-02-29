@@ -92,7 +92,7 @@ output_analyzer = Agent(
   tools=[search_tool],
   allow_delegation=True
 )
-
+#Finish this later
 output_validator = Agent(
   role='Vlad, Expert Validator',
   goal=f'Find sports information online relevent to this specific player: {playerInfo}', 
