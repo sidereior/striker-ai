@@ -72,7 +72,7 @@ research_task = Task(
 
 output_analyzer = Agent(
   role='Adam, Expert Analyzer',
-  goal=f'Look at the data given to you by the searcher_gen agent and using your given tools create graphs based on the given information. Include all the raw data and statistics given to you.', 
+  goal=f'Look at the data given to you in the context from the research_task and using your given tools develop a comprehsive quantitative player report that includes graphs based on the given information. Include all the raw data and statistics given to you in this report as well as your new graphs from bearly.', 
   verbose=True,
   memory=True,
   backstory="You are an expert in taking in data and statistics and turning them into graphs. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting graph you create.",
@@ -82,7 +82,7 @@ output_analyzer = Agent(
 
 output_validator = Agent(
   role='Vlad, Expert Validator',
-  goal=f'take the information given to you and turn it into a json ', 
+  goal=f'take the information given to you and turn it into a json acceptable format and it should include all aspects of the comprehensive quanttative report.', 
   verbose=True,
   memory=True,
   backstory="You are an expert in getting information given to you and turn it into a json. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
