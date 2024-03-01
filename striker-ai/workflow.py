@@ -17,9 +17,8 @@
 #   youtube search
 #   
 
-
 import os
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "" 
 
 from crewai import Agent
 from crewai import Crew
@@ -36,7 +35,7 @@ params = {
     "hl": "en",
 }
 search_tool = SerpAPIWrapper(params=params)
-bearly_tool = BearlyInterpreterTool(api_key="bearly-sk-c1wlaJ2kuvuucRy6UXFEMcm8dpE")
+bearly_tool = BearlyInterpreterTool(api_key="")
 
 # Player for the crew to run
 playerInfo = ''
@@ -77,7 +76,7 @@ output_analyzer = Agent(
   verbose=True,
   memory=True,
   backstory="You are an expert in taking in data and statistics and turning them into graphs. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting graph you create.",
-  tools=[bearly_tool, saerch_tool],
+  tools=[bearly_tool, search_tool],
   allow_delegation=True,
 )
 
