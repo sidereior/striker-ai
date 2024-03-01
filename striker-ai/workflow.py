@@ -25,8 +25,10 @@ from crewai import Agent
 from crewai import Crew
 from crewai import Process
 from crewai import Task
-#from langchain_community.utilities import ChatOpenAI
 from langchain_community.utilities import SerpAPIWrapper
+from langchain.agents import AgentType, initialize_agent
+from langchain.tools import BearlyInterpreterTool
+from langchain_openai import ChatOpenAI
 
 params = {
     "engine": "google",
@@ -34,7 +36,7 @@ params = {
     "hl": "en",
 }
 search_tool = SerpAPIWrapper(params=params)
-
+bearly_tool = BearlyInterpreterTool(api_key="bearly-sk-c1wlaJ2kuvuucRy6UXFEMcm8dpE")
 
 # Player for the crew to run
 playerInfo = ''
@@ -69,6 +71,25 @@ research_task = Task(
   agent=searcher_gen,
 )
 
+output_analyzer = Agent(
+  role='Adam, Expert Analyzer',
+  goal=f'Look at the data given to you by the searcher_gen agent and using your given tools create graphs based on the given information. Include all the raw data and statistics given to you.', 
+  verbose=True,
+  memory=True,
+  backstory="You are an expert in taking in data and statistics and turning them into graphs. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting graph you create.",
+  tools=[bearly_tool, saerch_tool],
+  allow_delegation=True,
+)
+
+output_validator = Agent(
+  role='Vlad, Expert Validator',
+  goal=f'take the information given to you and turn it into a json ', 
+  verbose=True,
+  memory=True,
+  backstory="You are an expert in getting information given to you and turn it into a json. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
+  tools=[search_tool],
+  allow_delegation=True
+)
 # Writing task with language model configuration
 output_validation = Task(
   description=f"""Generate a json output filled with all included stats and player information, 
@@ -83,26 +104,7 @@ output_validation = Task(
   async_execution=False,
   output_file='eval_timestamp.json'  # Example of output customization
 )
-output_analyzer = Agent(
-  role='Adam Expert Searcher',
-  goal=f'Find sports information online relevent to this specific player: {playerInfo}', 
-  verbose=True,
-  memory=True,
-  backstory="You are an expert in searching for specific information and statistics for particular sports players. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
-  tools=[search_tool],
-  allow_delegation=True
-)
-#hihhd
-#Finish this later
-output_validator = Agent(
-  role='Vlad, Expert Validator',
-  goal=f'take the information given to you and turn it into a json {playerInfo}', 
-  verbose=True,
-  memory=True,
-  backstory="You are an expert in getting information given to you and turn it into a json. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
-  tools=[search_tool],
-  allow_delegation=True
-)
+
 # Forming the tech-focused crew with enhanced configurations
 crew = Crew(
   agents=[searcher_gen, searcher_eval],
@@ -114,3 +116,4 @@ crew = Crew(
 # Starting the task execution process with enhanced feedback
 result = crew.kickoff()
 print(result)
+
