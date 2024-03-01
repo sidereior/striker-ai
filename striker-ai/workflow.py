@@ -18,30 +18,62 @@
 #   
 
 import os
-os.environ["OPENAI_API_KEY"] = "" 
+os.environ["OPENAI_API_KEY"] = "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" 
 
 from crewai import Agent
 from crewai import Crew
 from crewai import Process
 from crewai import Task
-from langchain_community.utilities import SerpAPIWrapper
-from langchain.agents import AgentType, initialize_agent
-from langchain.tools import BearlyInterpreterTool
+from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_openai import ChatOpenAI
 
-'''params = {
-#    "engine": "google",
- #   "gl": "us",
+'''p
+arams = {
+    "engine": "google",
+    "gl": "us",
     "hl": "en",
 }
 search_tool = SerpAPIWrapper(params=params)
 '''
-from langchain.tools import DuckDuckGoSearchRun
 search_tool = DuckDuckGoSearchRun()
-bearly_tool = BearlyInterpreterTool(api_key="")
 
 # Player for the crew to run
-playerInfo = ''
+playerInfo = """{
+&quot;player&quot;: {
+&quot;id&quot;: &quot;HW76DMSW&quot;,
+&quot;photo&quot;: &quot;https://dsa-labs.s3.amazonaws.com/profile-
+photos/LNj81wxd.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-
+Credential=AKIAXH5FFBM3LXZJGS66%2F20240212%2Fus-east-2%2Fs3%2Faws4_request&amp;X-
+Amz-Date=20240212T165550Z&amp;X-Amz-Expires=100000&amp;X-Amz-SignedHeaders=host&amp;X-
+Amz-
+Signature=db972afdec8247b44d724fe1ad641cfa3c02725dfb23ba53b1ef7d44436021a1&quot;,
+&quot;email&quot;: null,
+&quot;firstName&quot;: &quot;Christian&quot;,
+&quot;lastName&quot;: &quot;Pulišić&quot;,
+&quot;bio&quot;: {
+&quot;gender&quot;: &quot;Male&quot;,
+&quot;birthdate&quot;: &quot;1998-09-14&quot;,
+&quot;height&quot;: 70,
+&quot;weight&quot;: 160,
+&quot;location&quot;: null,
+&quot;citizenship&quot;: &quot;US&quot;,
+&quot;flag&quot;: &quot;https://dsa-labs-public.s3.amazonaws.com/country-
+flags/us.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-
+Credential=AKIAXH5FFBM3LXZJGS66%2F20240212%2Fus-east-2%2Fs3%2Faws4_request&amp;X-
+Amz-Date=20240212T165550Z&amp;X-Amz-Expires=100000&amp;X-Amz-SignedHeaders=host&amp;X-
+Amz-
+Signature=46d0efa666c28902cd406c55ce81796d6b048107c1e12e42e5a856bda22720bd&quot;,
+&quot;state&quot;: &quot;PA&quot;,
+&quot;city&quot;: &quot;Hershey&quot;,
+&quot;dominantSide&quot;: &quot;Right&quot;
+},
+&quot;socials&quot;: [
+&quot;https://www.instagram.com/cmpulisic&quot;,
+&quot;https://www.twitter.com/pulisic&quot;,
+&quot;https://www.tiktok.com/@pulisic&quot;
+]
+}
+}"""
 
 # Search query modifier agent with custom tools and delegation capability
 searcher_eval = Agent(
@@ -75,11 +107,11 @@ research_task = Task(
 
 output_analyzer = Agent(
   role='Adam, Expert Analyzer',
-  goal=f'Look at the data given to you in the context from the research_task and using your given tools develop a comprehsive quantitative player report that includes graphs based on the given information. Include all the raw data and statistics given to you in this report as well as your new graphs from bearly.', 
+  goal=f'Look at the data given to you in the context from the research_task and using your given tools develop a comprehsive quantitative player report is based on the given information, and this should be relatively brief and include all raw stats.', 
   verbose=True,
   memory=True,
   backstory="You are an expert in taking in data and statistics and turning them into graphs. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting graph you create.",
-  tools=[bearly_tool, search_tool],
+  tools=[],
   allow_delegation=True,
 )
 
@@ -89,7 +121,7 @@ output_validator = Agent(
   verbose=True,
   memory=True,
   backstory="You are an expert in getting information given to you and turn it into a json. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
-  tools=[search_tool],
+  tools=[],
   allow_delegation=True
 )
 # Writing task with language model configuration
@@ -109,11 +141,11 @@ output_validation = Task(
 
 # Forming the tech-focused crew with enhanced configurations
 crew = Crew(
-  agents=[searcher_gen, searcher_eval],
+  agents=[searcher_gen, searcher_eval, output_analyzer, output_validator],
   tasks=[research_task, output_validation],
   manager_llm=ChatOpenAI(temperature=0, model="gpt-4"),
   # later return back to this and change again to be sure that the modoel is the best
-  process=Process.hierarchical 
+  process=Process.sequential,
 )
 # Starting the task execution process with enhanced feedback
 result = crew.kickoff()
