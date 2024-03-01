@@ -19,13 +19,13 @@
 
 
 import os
-os.environ["OPENAI_API_KEY"] = ""
+os.environ["OPENAI_API_KEY"] = "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"
 
 from crewai import Agent
 from crewai import Crew
 from crewai import Process
 from crewai import Task
-from langchain_community.utilities import ChatOpenAI
+#from langchain_community.utilities import ChatOpenAI
 from langchain_community.utilities import SerpAPIWrapper
 
 params = {
@@ -42,7 +42,7 @@ playerInfo = ''
 # Search query modifier agent with custom tools and delegation capability
 searcher_eval = Agent(
   role='Edward, Expert Search Query Consultor',
-  goal=f'Please evaluate current search results and modify the search query to improve the results for {topic}.',
+  goal=f'Please evaluate current search results and modify the search query to improve the results for {playerInfo}.',
   verbose=True,
   memory=True,
   backstory="You are an expert in refining search queries for sports topics. You have been asked to modify and make prompts better anytime a search is executed. You get tippepd for every informative, relevant, and effective search query that you generate.",
@@ -77,14 +77,14 @@ output_validation = Task(
   expected_output='You output JSON that includes all of the quantitative information about the player from the given research_task. You also preform analysis on the information and automatically generate graphs and trend insights based upon this data, and use your agents to preform analysis, and validate the output to be turned into a json output.',
   # two agents: 1st analyze the data 
     # 2nd validate the output and turn into json based on analyis (and including raw data)
-  tools=[chatopneai_placeholder],
-  agent=output_analyzer, output_validator,
+  tools=[],
+  agent=output_analyzer,
   context=[research_task],
   async_execution=False,
   output_file='eval_timestamp.json'  # Example of output customization
 )
 output_analyzer = Agent(
-  role='Adam, Expert Searcher',
+  role='Adam Expert Searcher',
   goal=f'Find sports information online relevent to this specific player: {playerInfo}', 
   verbose=True,
   memory=True,
@@ -107,6 +107,7 @@ crew = Crew(
   agents=[searcher_gen, searcher_eval],
   tasks=[research_task, output_validation],
   manager_llm=ChatOpenAI(temperature=0, model="gpt-4"),
+  # later return back to this and change again to be sure that the modoel is the best
   process=Process.hierarchical 
 )
 # Starting the task execution process with enhanced feedback
