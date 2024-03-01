@@ -29,12 +29,15 @@ from langchain.agents import AgentType, initialize_agent
 from langchain.tools import BearlyInterpreterTool
 from langchain_openai import ChatOpenAI
 
-params = {
-    "engine": "google",
-    "gl": "us",
+'''params = {
+#    "engine": "google",
+ #   "gl": "us",
     "hl": "en",
 }
 search_tool = SerpAPIWrapper(params=params)
+'''
+from langchain.tools import DuckDuckGoSearchRun
+search_tool = DuckDuckGoSearchRun()
 bearly_tool = BearlyInterpreterTool(api_key="")
 
 # Player for the crew to run
