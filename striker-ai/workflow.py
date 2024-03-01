@@ -25,8 +25,10 @@ from crewai import Agent
 from crewai import Crew
 from crewai import Process
 from crewai import Task
-#from langchain_community.utilities import ChatOpenAI
 from langchain_community.utilities import SerpAPIWrapper
+from langchain.agents import AgentType, initialize_agent
+from langchain.tools import BearlyInterpreterTool
+from langchain_openai import ChatOpenAI
 
 params = {
     "engine": "google",
@@ -34,7 +36,7 @@ params = {
     "hl": "en",
 }
 search_tool = SerpAPIWrapper(params=params)
-
+bearly_tool = BearlyInterpreterTool(api_key="bearly-sk-c1wlaJ2kuvuucRy6UXFEMcm8dpE")
 
 # Player for the crew to run
 playerInfo = ''
@@ -89,7 +91,7 @@ output_analyzer = Agent(
   verbose=True,
   memory=True,
   backstory="You are an expert in searching for specific information and statistics for particular sports players. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
-  tools=[search_tool],
+  tools=[diagram_generator],
   allow_delegation=True
 )
 #Finish this later
