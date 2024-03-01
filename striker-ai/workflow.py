@@ -84,11 +84,11 @@ output_validation = Task(
   output_file='eval_timestamp.json'  # Example of output customization
 )
 output_analyzer = Agent(
-  role='Adam Expert Searcher',
-  goal=f'Find sports information online relevent to this specific player: {playerInfo}', 
+  role='Adam Expert Analyzer',
+  goal=f'Look at the data given to you by the searcher_gen agent and using your given tools create graphs based on the given information. Include all the raw data and statistics given to you.', 
   verbose=True,
   memory=True,
-  backstory="You are an expert in searching for specific information and statistics for particular sports players. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
+  backstory="You are an expert in taking in data and statistics and turning them into graphs. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting graph you create.",
   tools=[search_tool],
   allow_delegation=True
 )
