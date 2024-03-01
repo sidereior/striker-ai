@@ -77,7 +77,7 @@ output_analyzer = Agent(
   verbose=True,
   memory=True,
   backstory="You are an expert in taking in data and statistics and turning them into graphs. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting graph you create.",
-  tools=[bearly_tool, saerch_tool],
+  tools=[bearly_tool, search_tool],
   allow_delegation=True,
 )
 
