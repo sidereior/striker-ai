@@ -18,14 +18,20 @@
 #   
 
 import os
-os.environ["OPENAI_API_KEY"] = "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" 
-
+import openai
+from dotenv import load_dotenv, find_dotenv
 from crewai import Agent
 from crewai import Crew
 from crewai import Process
 from crewai import Task
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_openai import ChatOpenAI
+
+# Load from local LM Studio server
+
+load_dotenv(find_dotenv())
+openai.api_key = os.environ["OPENAI_API_KEY"]
+openai.api_base = "http://localhost:1234/v1"
 
 '''p
 arams = {
