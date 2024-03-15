@@ -29,9 +29,11 @@ from langchain_openai import ChatOpenAI
 
 # Load from local LM Studio server
 
-load_dotenv(find_dotenv())
-openai.api_key = os.environ["OPENAI_API_KEY"]
-openai.api_base = "http://localhost:1234/v1"
+default_llm = ChatOpenAI(
+openai_api_base="http://localhost:1234/v1",
+openai_api_key="not-needed",
+model_name="TheBloke",
+)
 
 '''p
 arams = {
@@ -56,7 +58,8 @@ searcher_eval = Agent(
   memory=True,
   backstory="You are an expert in refining search queries for sports topics. You have been asked to modify and make prompts better anytime a search is executed. You get tippepd for every informative, relevant, and effective search query that you generate.",
   tools=[search_tool],
-  allow_delegation=True
+  allow_delegation=True,
+  llm=default_llm
 )
 
 # Expert searcher based upon the given playerInfo. 
@@ -67,7 +70,8 @@ searcher_gen = Agent(
   memory=True,
   backstory="You are an expert in searching for specific information and statistics for particular sports players. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
   tools=[search_tool],
-  allow_delegation=True
+  allow_delegation=True,
+  llm=default_llm
 )
 
 # Resarch task
@@ -86,6 +90,7 @@ output_analyzer = Agent(
   backstory="You are an expert in taking in data and statistics and turning them into graphs. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting graph you create.",
   tools=[],
   allow_delegation=True,
+  llm=default_llm
 )
 
 output_validator = Agent(
@@ -95,7 +100,8 @@ output_validator = Agent(
   memory=True,
   backstory="You are an expert in getting information given to you and turn it into a json. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
   tools=[],
-  allow_delegation=True
+  allow_delegation=True,
+  llm=default_llm
 )
 # Writing task with language model configuration
 output_validation = Task(
@@ -111,12 +117,11 @@ output_validation = Task(
   async_execution=False,
   output_file='eval_timestamp.json'  # Example of output customization
 )
-
 # Forming the tech-focused crew with enhanced configurations
 crew = Crew(
   agents=[searcher_gen, searcher_eval, output_analyzer, output_validator],
   tasks=[research_task, output_validation],
-  manager_llm=ChatOpenAI(temperature=0, model="gpt-4"),
+  manager_llm=default_llm,
   # later return back to this and change again to be sure that the modoel is the best
   process=Process.sequential,
 )
