@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from strikerdjango import crewai_endpoint
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('crewai-endpoint/', views.crewai_endpoint, name='crewai_endpoint'),
+    path('crewai-endpoint/', crewai_endpoint, name='crewai_endpoint'),
 ]
