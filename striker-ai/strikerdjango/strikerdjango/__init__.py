@@ -10,7 +10,7 @@ from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_openai import ChatOpenAI
 
 def crewai_endpoint(request):
-    player_info = request.GET.get('playerInfo', "this is an invalid response")
+    playerInfo = request.GET.get('playerInfo', "this is an invalid response")
 
     default_llm = ChatOpenAI(
     openai_api_base="http://localhost:1234/v1",
@@ -27,6 +27,7 @@ def crewai_endpoint(request):
     search_tool = SerpAPIWrapper(params=params)
     '''
     search_tool = DuckDuckGoSearchRun()
+
 
     # Search query modifier agent with custom tools and delegation capability
     searcher_eval = Agent(
@@ -104,4 +105,4 @@ def crewai_endpoint(request):
     process=Process.sequential,
     )
 
-    return JsonResponse({'response': result})
+    return JsonResponse({'response': crew.kickoff()})
