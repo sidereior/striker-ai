@@ -105,4 +105,5 @@ def crewai_endpoint(request):
     process=Process.sequential,
     )
 
-    return JsonResponse({'response': crew.kickoff()})
+    response = crew.kickoff()
+    return JsonResponse({'response': response})
