@@ -24,18 +24,16 @@ from crewai import Agent
 from crewai import Crew
 from crewai import Process
 from crewai import Task
-from langchain_community.tools import DuckDuckGoSearchRun
-from langchain_openai import ChatOpenAI
+#from langchain_community.tools import DuckDuckGoSearchRun
+#from langchain.agents import AgentType, Tool, initialize_agent
+from langchain_community.utilities import GoogleSerperAPIWrapper
 
-'''p
-arams = {
-    "engine": "google",
+params = {
+    "engine": "google",  # You can switch to 'bing' or another supported engine
     "gl": "us",
-    "hl": "en",
+    "hl": "en"
 }
-search_tool = SerpAPIWrapper(params=params)
-'''
-search_tool = DuckDuckGoSearchRun()
+search_tool = GoogleSerperAPIWrapper(params=params)
 
 # Player for the crew to run
 playerInfo = """
@@ -43,6 +41,7 @@ atul venkatesh dartmouth
 """
 
 # Search query modifier agent with custom tools and delegation capability
+'''
 searcher_eval = Agent(
   role='Edward, Expert Search Query Consultor',
   goal=f'Please evaluate current search results and modify the search query to improve the results for {playerInfo}.',
@@ -52,6 +51,7 @@ searcher_eval = Agent(
   tools=[search_tool],
   allow_delegation=True
 )
+'''
 
 # Expert searcher based upon the given playerInfo. 
 searcher_gen = Agent(
