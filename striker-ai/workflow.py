@@ -18,7 +18,6 @@
 #   
 
 import os
-os.environ["OPENAI_API_KEY"] = "sk-proj-eejUpxTZjmg7SU9YIfc5T3BlbkFJjj1KN9p5d0EhoAQkpx85" 
 
 from crewai import Agent
 from crewai import Crew
