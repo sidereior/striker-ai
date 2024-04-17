@@ -77,7 +77,10 @@ Signature=46d0efa666c28902cd406c55ce81796d6b048107c1e12e42e5a856bda22720bd&quot;
 }"""
 
 # Search query modifier agent with custom tools and delegation capability
-'''
+<<<<<<< HEAD
+=======
+
+>>>>>>> e7a60c030722896da21ddead5f610499f6257313
 searcher_eval = Agent(
   role='Edward, Expert Search Query Consultor',
   goal=f'Please evaluate current search results and modify the search query to improve the results for {playerInfo}.',
