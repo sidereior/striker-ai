@@ -77,6 +77,7 @@ Signature=46d0efa666c28902cd406c55ce81796d6b048107c1e12e42e5a856bda22720bd&quot;
 }"""
 
 # Search query modifier agent with custom tools and delegation capability
+'''
 searcher_eval = Agent(
   role='Edward, Expert Search Query Consultor',
   goal=f'Please evaluate current search results and modify the search query to improve the results for {playerInfo}.',
@@ -88,6 +89,7 @@ searcher_eval = Agent(
 )
 
 # Expert searcher based upon the given playerInfo. 
+'''
 searcher_gen = Agent(
   role='Sam, Expert Searcher',
   goal=f'Find sports information online relevent to this specific player: {playerInfo}', 
@@ -97,6 +99,7 @@ searcher_gen = Agent(
   tools=[search_tool],
   allow_delegation=True
 )
+'''
 
 # Resarch task
 research_task = Task(
