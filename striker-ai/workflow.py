@@ -87,7 +87,6 @@ searcher_eval = Agent(
 )
 
 # Expert searcher based upon the given playerInfo. 
-'''
 searcher_gen = Agent(
   role='Sam, Expert Searcher',
   goal=f'Find sports information online relevent to this specific player: {playerInfo}', 
@@ -97,7 +96,6 @@ searcher_gen = Agent(
   tools=[search_tool],
   allow_delegation=True
 )
-'''
 
 # Resarch task
 research_task = Task(
