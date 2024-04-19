@@ -24,8 +24,6 @@ from langchain_openai import OpenAI
 from langchain_community.tools import SceneXplainTool
 import os
 
-os.environ["SCENEX_API_KEY"] = "V7EUmbgr2qJ5RmIPS2rQ:25890ef2907d7aae42ecdf610b97f631591dbfd54f5e7a0517934b7be555d234"
-os.environ["OPENAI_API_KEY"] = "sk-proj-XC8D6Fs005WMIFJOzccRT3BlbkFJgmdQDFlWnK6riNLruwnl"
 '''p
 arams = {
     "engine": "google",
