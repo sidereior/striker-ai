@@ -21,7 +21,7 @@ from langchain.chains import LLMChain
 from langchain_community.utilities.dalle_image_generator import DallEAPIWrapper
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import OpenAI
-from langchain_community.tools import SceneXplainTool
+# from langchain_community.tools import SceneXplainTool
 import os
 
 '''p
@@ -37,7 +37,7 @@ search_tool = SerperDevTool()
 scraping_tool = SeleniumScrapingTool()
 video_tool = YoutubeChannelSearchTool()
 website_rag_tool = WebsiteSearchTool(website='https://247sports.com/')
-vision_tool = SceneXplainTool()
+#vision_tool = SceneXplainTool()
 maxpreps_tool = WebsiteSearchTool(website='https://www.maxpreps.com/')
 espn_tool = WebsiteSearchTool(website='https://www.espn.com/college-football/')
 buckeyes_tool = WebsiteSearchTool(website='https://www.si.com/college/ohiostate/football')
@@ -127,7 +127,7 @@ social_media_posts_analyzer = Agent(
     goal = 'Using info KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes. Look at the athletes social media accounts use image recognition in order to find out what the athlete is posting about in order to generate a small summary of the athletes social media posts and them as a person',
     backstory="You are an expert in image recognition for social media and reports summaries on atheletes posts and generate great summaries and read into their social media posts to get a better understanding of them",
     # come back and get vision working
-    tools=[search_tool, scraping_tool, vision_tool], 
+    tools=[search_tool, scraping_tool], 
     verbose = True,
     memory = True, 
     max_iter=2,
@@ -139,7 +139,7 @@ five_star_fans_consultor = Agent(
     role = 'Five star fan consultor',
     goal = 'Using this info: KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes. You are a consultor who creates summaries for five star fans about an athlete that shows how good they are to be featured on five star fans ',
     backstory='You are consulting for five star fans, You aim to look for strategic partnerships that elevate the athletes, expand their brand, and enhance the fan opportunity to engage with their favorite teams ',
-    tools=[search_tool, scraping_tool, vision_tool, video_tool], 
+    tools=[search_tool, scraping_tool, video_tool], 
     verbose = True,
     memory = True, 
     max_iter=2,
@@ -167,7 +167,7 @@ video_highlights_searcher = Agent(
   goal='Using this info: KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes. Search to find video highlights relevant to the specified player from their info and communicate with Han to get an analysis of the video highlights.',
   backstory='Expert in video footage to highlight key moments in sports matches.',
   # come back and fix this so that we can also do vision
-  tools=[video_tool, vision_tool, search_tool, scraping_tool],  
+  tools=[video_tool, search_tool, scraping_tool],  
   verbose=True,
   memory=True,
   max_iter=2,
@@ -179,7 +179,7 @@ mock_coach_stats_consultor = Agent(
   role='Mock Coach and Highlights Analyzer',
   goal='Using this info: KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes.  Provide strategic sports insights and statistics from a coach’s perspective, considering modern strategy.',
   backstory='As a virtual coach, your analysis helps fans understand the game from a strategic standpoint based upon video footage and you always consider the strengths, weaknesses, meta strategy, and broader context within your analysis of a player',
-  tools=[website_rag_tool, search_tool, vision_tool],  
+  tools=[website_rag_tool, search_tool],  
   verbose=True,
   memory=True,
   max_iter=2,
@@ -230,7 +230,7 @@ recursive_category_manager = Agent(
     role = 'Recursive Category Manager',
     goal = 'Using thisn info: KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes. Effectivly coordinate all the agents in the Recursive branch and delegate tasks effeciently',
     backstory="Expert in coordinatng and managing agents. Expert in delegating tasks to correct agents",
-    tools=[search_tool, scraping_tool, vision_tool, video_tool], 
+    tools=[search_tool, scraping_tool, video_tool], 
     verbose = True,
     memory = True, 
     max_iter=2,
@@ -253,7 +253,7 @@ quant_recursive_search_analyzer = Agent(
   role='Quant Recursive Search Analyzer',
   goal='Using this info: KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes. Analyze search results and extract quantitative data in a recursive manner by coordinating with Ron recursively exploring new search categories',
   backstory='Specialized in quantitative analysis, turning raw data and images into meaningful metrics and analyzing comprehensive trends',
-  tools=[search_tool, vision_tool],  
+  tools=[search_tool],  
   verbose=True,
   memory=True,
   max_iter=2,
