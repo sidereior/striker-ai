@@ -79,7 +79,7 @@ master_searcher = Agent(
   backstory="You are an expert in searching for specific information and statistics for particular sports players. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
   tools=[search_tool],
   allow_delegation=True,
-  max_iter=4,
+  max_iter=10,
   memory = True,
 )
 
@@ -91,7 +91,7 @@ master_search_brancher = Agent(
   tools=[],
   allow_delegation=True,
   verbose=True, 
-  max_iter=4,
+  max_iter=5,
   memory = True,
 )
 ## End of basic searching loop
@@ -105,7 +105,7 @@ social_media_manager = Agent(
     tools=[], 
     verbose = True,
     memory = True, 
-    max_iter=4,
+    max_iter=2,
     allow_delegation = True
 )
 
@@ -117,7 +117,7 @@ social_media_stats_analyzer = Agent(
     tools=[search_tool, scraping_tool], 
     verbose = True,
     memory = True, 
-    max_iter=4,
+    max_iter=2,
     allow_delegation = True
 )
 
@@ -130,7 +130,7 @@ social_media_posts_analyzer = Agent(
     tools=[search_tool, scraping_tool, vision_tool], 
     verbose = True,
     memory = True, 
-    max_iter=4,
+    max_iter=2,
     allow_delegation = True
 )
 
@@ -142,7 +142,7 @@ five_star_fans_consultor = Agent(
     tools=[search_tool, scraping_tool, vision_tool, video_tool], 
     verbose = True,
     memory = True, 
-    max_iter=4,
+    max_iter=2,
     allow_delegation = True
 )
 
@@ -157,7 +157,7 @@ highlights_category_manager = Agent(
     tools=[], 
     verbose = True,
     memory = True, 
-    max_iter=4,
+    max_iter=2,
     allow_delegation = True
 )
 
@@ -170,7 +170,7 @@ video_highlights_searcher = Agent(
   tools=[video_tool, vision_tool, search_tool, scraping_tool],  
   verbose=True,
   memory=True,
-  max_iter=4,
+  max_iter=2,
   allow_delegation=True
 )
 
@@ -182,7 +182,7 @@ mock_coach_stats_consultor = Agent(
   tools=[website_rag_tool, search_tool, vision_tool],  
   verbose=True,
   memory=True,
-  max_iter=4,
+  max_iter=2,
   allow_delegation=True
 )
 ## End of Highlights Branch
@@ -196,7 +196,7 @@ stats_category_manager = Agent(
     tools=[], 
     verbose = True,
     memory = True, 
-    max_iter=4,
+    max_iter=2,
     allow_delegation = True
 )
 
@@ -208,7 +208,7 @@ team_stats_finder = Agent(
     tools=[espn_tool, maxpreps_tool, buckeyes_tool, search_tool, website_rag_tool, scraping_tool], 
     verbose = True,
     memory = True, 
-    max_iter=4,
+    max_iter=2,
     allow_delegation = True
 )
 
@@ -220,7 +220,7 @@ match_stats_finder = Agent(
     tools=[espn_tool, maxpreps_tool, buckeyes_tool, search_tool, website_rag_tool, scraping_tool], 
     verbose = True,
     memory = True, 
-    max_iter=4,
+    max_iter=2,
     allow_delegation = True
 )
 ## End of Stats Branch
@@ -233,7 +233,7 @@ recursive_category_manager = Agent(
     tools=[search_tool, scraping_tool, vision_tool, video_tool], 
     verbose = True,
     memory = True, 
-    max_iter=4,
+    max_iter=2,
     allow_delegation = True
 )
 
@@ -244,7 +244,7 @@ recursive_search_consultor = Agent(
   tools=[search_tool, scraping_tool],  
   verbose=True,
   memory=True,
-  max_iter=4,
+  max_iter=2,
   allow_delegation=True
 )
 
@@ -256,7 +256,7 @@ quant_recursive_search_analyzer = Agent(
   tools=[search_tool, vision_tool],  
   verbose=True,
   memory=True,
-  max_iter=4,
+  max_iter=2,
   allow_delegation=True
 )
 
