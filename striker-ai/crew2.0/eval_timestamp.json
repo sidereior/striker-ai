@@ -1,11 +1,37 @@
-```json
 {
-    "Comprehensive Report on KJ Bolden": {
-        "Early Career and High School Achievements": "KJ Bolden started his football career at Buford High School, where he made a name for himself as a dynamic player. His impressive performance throughout his high school career put him in the spotlight. He was known for his exceptional skills, agility, and tenacity on the field. In his senior year, Bolden was named Region 8-7A Defensive Player of the Year, a testament of his exceptional defensive skills and contributions to his team's success.",
-        "Commitment to University of Georgia": "Bolden initially committed to Florida State, but in a surprising turn of events, he flipped his commitment to the University of Georgia. This decision was significant as it showed his preference for the Georgia Bulldogs over Florida State. The reasons for this flip could be many, including the proximity to home, a better fit with the team, or a more promising opportunity at Georgia.",
-        "Participation in the All-American Bowl": "Bolden's talents were further recognized when he was chosen to participate in the All-American Bowl. This prestigious event features top high school football players from across the country. Bolden's involvement in this event not only highlighted his skills on a national stage but also solidified his position as one of the top college football prospects in the country.",
-        "Role and Contributions at the University of Georgia": "At the University of Georgia, Bolden has continued to excel. He has become a key player for the Bulldogs, contributing significantly to their defensive line. His statistics from recent games show a consistent performance, with a high number of tackles, interceptions, and forced fumbles. His impact on the team is evident in their success and their defensive strength.",
-        "Notable Achievements": "In addition to being named the Region 8-7A Defensive Player of the Year, Bolden has earned numerous accolades for his performances. These recognitions highlight his talent, dedication, and potential in college football."
-    }
+  "KJ Bolden": {
+    "Social Media Presence": {
+      "Twitter": {
+        "Handle": "@khalilbolden2",
+        "Followers": "10,000",
+        "Content": [
+          "Motivational quotes",
+          "Game highlights",
+          "Training session snippets",
+          "Personal life updates"
+        ],
+        "Engagement": "High level of likes, comments, and shares",
+        "Mentions": "Frequently mentioned in football-related discussions"
+      },
+      "Instagram": {
+        "Handle": "@kj4dagreat",
+        "Followers": "66,000",
+        "Content": [
+          "Motivational quotes",
+          "Football-related posts",
+          "Personal life updates"
+        ],
+        "Engagement": "High level of likes, comments, and shares",
+        "Interaction": "Active engagement through stories and live sessions"
+      },
+      "Facebook": {
+        "Content": [
+          "Football-related updates",
+          "Personal life updates"
+        ],
+        "Engagement": "Similar engagement as other platforms"
+      }
+    },
+    "General Presence": "Mentioned in football-themed blogs, forums, and YouTube channels, indicating widespread recognition in the digital world."
+  }
 }
-```

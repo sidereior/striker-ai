@@ -73,9 +73,10 @@ master_report_gen = Agent(
 ## Basic Searching Loop
 
 # Expert searcher based upon the given playerInfo. 
+
 master_searcher = Agent(
   role='Master Basic Searcher Executor',
-  goal=f'Find sports information online relevent to this specific player using their info: KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160',
+  goal=f'Find sports information online relevent to this specific player using their info: KJ,Bolden,Football',
   backstory="You are an expert in searching for specific information and statistics for particular sports players. You have been in this industry for 25 years and you recieve a tip for every relevant, informative, or interesting fact you find about a specific sports player",
   tools=[search_tool],
   allow_delegation=True,
@@ -84,9 +85,10 @@ master_searcher = Agent(
 )
 
 # Search Query Agent
+
 master_search_brancher = Agent(
   role='Master Search Query Brancher',
-  goal=f'Take the search results from the Mark, Master Basic Search Executor and pass this information off to each of the Category Managers including Social Meida, Highlights, Stats, and Recursive for KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes.',
+  goal=f'Take the search results from the Mark, Master Basic Search Executor and pass this information off to each of the Category Managers including Social Meida, Highlights, Stats, and Recursive for KJ,Bolden,Football',
   backstory="You are an expert in relaying information to other Agent Category Managers and give them basic search results so that each Manager can conduct in-depth reserach.",
   tools=[],
   allow_delegation=True,
@@ -100,7 +102,7 @@ master_search_brancher = Agent(
 # Social Presence and Posts Analyzer 
 social_media_manager = Agent(
     role = 'Social Media Category Manager',
-    goal = 'Using this info:KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes. First, delegate research tasks to each of the social media agents, then analyze the results to provide a comprehensive, evidence-backed, and in-depth summary of the player’s social media presence and posts.',
+    goal = 'Using this info:KJ,Bolden,Football. First, delegate research tasks to each of the social media agents, then analyze the results to provide a comprehensive, evidence-backed, and in-depth summary of the player’s social media presence.',
     backstory="You are an expert in managing social media research agents and delegate research tasks to them. Additionally, after each research agent has completed their searches, you provide a comprehensive report back to the Master Report Generator.",
     tools=[], 
     verbose = True,
@@ -112,7 +114,7 @@ social_media_manager = Agent(
 # Social Media Stats and Trends Analyzer
 social_media_stats_analyzer = Agent(
     role = 'Social Presence and Stats Analyzer',
-    goal = 'Using this info KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes. Look at the athletes social media accounts and gather the aggregate views and stats across different platforms. Also find out if this player has any brand deals, nil, or sponsorships and finally give an estimate of their social media revenue' ,
+    goal = 'Using this info KJ,Bolden,Football. Look at the athletes social media accounts and gather the aggregate views and stats across different platforms. Also find out if this player has any brand deals, nil, or sponsorships and finally give an estimate of their social media revenue' ,
     backstory="You are an expert social media analyzer. Using your tools you would navigate to specific athletes social media pages and analyze them. You create summarys based on the information from your goals",
     tools=[search_tool, scraping_tool], 
     verbose = True,
@@ -124,7 +126,7 @@ social_media_stats_analyzer = Agent(
 # Social Media Posts Analyzer
 social_media_posts_analyzer = Agent(
     role = 'Social Meda Posts Analyzer',
-    goal = 'Using info KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes. Look at the athletes social media accounts use image recognition in order to find out what the athlete is posting about in order to generate a small summary of the athletes social media posts and them as a person',
+    goal = 'Using info KJ,Bolden,Football. Look at the athletes social media accounts use image recognition in order to find out what the athlete is posting about in order to generate a small summary of the athletes social media posts and them as a person',
     backstory="You are an expert in image recognition for social media and reports summaries on atheletes posts and generate great summaries and read into their social media posts to get a better understanding of them",
     # come back and get vision working
     tools=[search_tool, scraping_tool], 
@@ -137,7 +139,7 @@ social_media_posts_analyzer = Agent(
 # Five Star Fans Consultor
 five_star_fans_consultor = Agent(
     role = 'Five star fan consultor',
-    goal = 'Using this info: KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes. You are a consultor who creates summaries for five star fans about an athlete that shows how good they are to be featured on five star fans ',
+    goal = 'Using this info: KJ,Bolden,Football. You are a consultor who creates summaries for five star fans about an athlete that shows how good they are to be featured on five star fans ',
     backstory='You are consulting for five star fans, You aim to look for strategic partnerships that elevate the athletes, expand their brand, and enhance the fan opportunity to engage with their favorite teams ',
     tools=[search_tool, scraping_tool, video_tool], 
     verbose = True,
@@ -145,13 +147,12 @@ five_star_fans_consultor = Agent(
     max_iter=2,
     allow_delegation = True
 )
-
 ## End of Social Media Branch
 
 
 # Social Media Summary
 social_summary = Task(
-  description=f'Generate a comprehensive summary of social media information using all of the agents in the social media branch for this info: KJ,Bolden,Football,S,2024,9,5,190 lbs,6 foot 2 inches,4160 likes. You must search the internet for information.',
+  description=f'Generate a comprehensive summary of social media information using all of the agents in the social media branch for this info: KJ,Bolden,Football. You must search the internet for information.',
   expected_output='You output an extremely comprehensive report that includes all of the research findings within the social media branch',
   agents=[social_media_posts_analyzer, social_media_stats_analyzer, five_star_fans_consultor, social_media_manager],
   context=[],
@@ -160,14 +161,23 @@ social_summary = Task(
 
 
 # Overall Report 
+information_accuracy_consultor = Agent(
+    role = 'Information Accuracy Consultor',
+    goal = 'Check over all the information generated by the master_report task. Make sure it is all accurate and if it is not remove it',
+    backstory='You are an expert reviewer and fact checker for recruited athletes',
+    tools=[search_tool], 
+    verbose = True,
+    memory = True, 
+    max_iter=8,
+    allow_delegation = True
+)
 master_report = Task(
-  description=f'Generate a master report that is very detailed and long and includes all of the information from each of the category branches for this player: KJ,Bolden',
+  description=f'Generate a master report that is very detailed and long and includes all of the information from each of the category branches for this player: KJ Bolden. Refer to the information_accuracy_consultor to make sure all the information is correct',
   expected_output='You output JSON that includes all of the information from the comprehensive player summary ',
-  agents=[master_report_gen, social_media_manager],
+  agents=[social_media_manager, information_accuracy_consultor],
   context=[social_summary],
   async_execution=False,
 )
-
 # Writing task with language model configuration
 output_validation = Task(
   description=f'Convert the final report into json, breaking each category into different fields for this player: KJ,Bolden',
@@ -181,7 +191,7 @@ output_validation = Task(
 # Forming the tech-focused crew with enhanced configurations
 crew = Crew(
     # may need to delete blockchain stuff???
-  agents=[master_search_brancher, master_searcher, master_report_gen, social_media_manager, social_media_posts_analyzer, social_media_stats_analyzer, five_star_fans_consultor],
+  agents=[social_media_manager, social_media_posts_analyzer, social_media_stats_analyzer, five_star_fans_consultor, information_accuracy_consultor ],
   tasks=[social_summary, master_report, output_validation],
   manager_llm=ChatOpenAI(temperature=0, model="gpt-4-turbo"),
   # later return back to this and change again to be sure that the modoel is the best
